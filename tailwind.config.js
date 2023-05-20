@@ -26,6 +26,7 @@ module.exports = {
       fdarkblue: "#43588E",
       fgreen: "#238044",
       flightgreen: "#38CE6E14",
+      fgreensuccess: "#16A349",
       fred: "#CE3838",
       flightred: "#CE383814",
     },
