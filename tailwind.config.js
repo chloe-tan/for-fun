@@ -9,6 +9,11 @@ module.exports = {
     fontFamily: {
       inter: ['Inter', 'sans-serif'],
     },
+    fontSize: {
+      fbase: ['16px', '24px'],
+      fmd: ['20px', '28px'],
+      flg: ['32px', '40px'],
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

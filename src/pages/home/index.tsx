@@ -1,10 +1,11 @@
+import FunTypography from "@/components/FunTypography";
 import LayoutWrapper from "@/components/LayoutWrapper";
 
 export default function Home() {
   return (
     <LayoutWrapper>
-      <h1 className="text-2xl font-bold mb-4">My App</h1>
-      <p>This is my app content.</p>
+      <FunTypography level={3}>Wallet Balance</FunTypography>
+      <FunTypography level={1}>$10,000</FunTypography>
     </LayoutWrapper>
   )
 }
