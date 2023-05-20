@@ -2,10 +2,10 @@ import { ReactNode, useMemo } from "react";
 
 // Refer to tailwind.config.css
 const typographyTailwindClassName = {
-  [1]: "text-flg font-semibold",
-  [2]: "text-fmd font-semibold",
-  [3]: "text-fbase font-semibold",
-  [4]: "text-fsm font-semibold",
+  [1]: "text-flg",
+  [2]: "text-fmd",
+  [3]: "text-fbase",
+  [4]: "text-fsm",
 } as any;
 
 interface FunTypographyProps {

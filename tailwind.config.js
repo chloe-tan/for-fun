@@ -24,10 +24,10 @@ module.exports = {
       fdark: "#2B2F43",
       forange: "#F7C478",
       fdarkblue: "#43588E",
-      fgreen: "##238044",
+      fgreen: "#238044",
       flightgreen: "#38CE6E14",
-      fred: "##CE3838",
-      flightred: "##CE383814",
+      fred: "#CE3838",
+      flightred: "#CE383814",
     },
     extend: {
       backgroundImage: {

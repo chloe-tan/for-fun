@@ -12,13 +12,13 @@ interface LayoutWrapperProps {
  */
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const className = useMemo(() => {
-    return `w-[360px] h-[600px] ${APP_BG_STYLE} flex flex-col items-center border border-gray-300 shadow-xl rounded-lg overflow-auto`;
+    return `w-[360px] h-[600px] ${APP_BG_STYLE} flex flex-col items-center border border-gray-300 shadow-xl rounded-lg`;
   }, []);
   return (
     <div className="flex items-center justify-center h-screen bg-white">
       <div className={className}>
         <Topbar />
-        <div className="w-full px-6 py-4">
+        <div className="w-full px-6 py-4 overflow-auto">
           {children}
         </div>
       </div>
