@@ -18,6 +18,7 @@ module.exports = {
     textColor: {
       fwhite: "#FFFFFF",
       fblack: "#000000",
+      fblack1: "#060914",
       flightgray: "#E4E7EC",
       fgray: "#74777C",
       fdark: "#2B2F43",
