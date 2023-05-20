@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import { Fragment } from 'react';
 import "../styles/global.css";
+import { WithStore } from '@/components/hooks/useStore';
 
 /**
  * Basic next app initialization
@@ -9,7 +10,9 @@ import "../styles/global.css";
 export default function FunApp({ Component, pageProps }: AppProps) {
   return (
     <Fragment>
-      <Component {...pageProps} />
+      <WithStore>
+        <Component {...pageProps} />
+      </WithStore>
     </Fragment>
   )
 }
