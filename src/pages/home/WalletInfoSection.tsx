@@ -1,7 +1,9 @@
 import CircleWrapper from "@/components/CircleWrapper";
 import FunTypography from "@/components/FunTypography";
+import { useStore } from "@/components/hooks/useStore";
 
 export default function WalletInfoSection() {
+  const store = useStore();
   return (
     <div id="wallet-info-section" className="flex flex-col items-center jusitfy-center gap-3">
       <div>
