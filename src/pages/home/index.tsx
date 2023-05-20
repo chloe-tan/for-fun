@@ -1,5 +1,5 @@
 import FunTypography from "@/components/FunTypography";
-import LayoutWrapper from "@/components/LayoutWrapper";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
 
 export default function Home() {
   return (
