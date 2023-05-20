@@ -3,9 +3,9 @@ import FunTypography from "../FunTypography";
 import CircleWrapper from "../CircleWrapper";
 import { SettingsIcon } from "../Icons";
 
-export default function Topbar() {
+export default function TopBar() {
   return (
-    <div className="w-full px-6 py-4 border border-gray-200 flex flex-row justify-between">
+    <div className="w-full px-6 py-[18px] border border-gray-200 flex flex-row justify-between">
       <div><SettingsIcon /></div>
       <div className="flex items-center gap-2 align-middle">
         <CircleWrapper />

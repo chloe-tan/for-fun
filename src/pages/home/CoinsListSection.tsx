@@ -21,7 +21,7 @@ function CoinListItem({ coinItem }: { coinItem: any }) {
   return (
     <div className="flex flex-row py-2 justify-between items-center">
       <div id="left-container" className="flex flex-row gap-4 items-center">
-        <CircleWrapper size="h-10 w-10" bgColor={CoinTickerDetailMap[coinItem.ticker as CoinTickerType].bgClass} text={CoinTickerDetailMap[coinItem.ticker as CoinTickerType].icon}/>
+        <CircleWrapper size="h-10 w-10" bgColor={CoinTickerDetailMap[coinItem.ticker as CoinTickerType].bgClass} text={CoinTickerDetailMap[coinItem.ticker as CoinTickerType]?.icon?.()} textStyles="pt-0 pr-0"/>
         <div className="flex flex-col justify-center">
           <FunTypography fontWeight="font-normal">{CoinTickerDetailMap?.[coinItem.ticker as CoinTickerType].label}</FunTypography>
           <FunTypography level={4} fontWeight="font-normal" textColor="text-fgray">{coinItem.balance} {coinItem.ticker}</FunTypography>
@@ -40,12 +40,12 @@ export default function CoinsListSection() {
     { ticker: CoinTickerType.ETH, balance: 20, balanceValue: 20000, deltaPercent: -1.5},
     { ticker: CoinTickerType.USDC, balance: 20, balanceValue: 20000, deltaPercent: 2},
     { ticker: CoinTickerType.DAI, balance: 1, balanceValue: 1000, deltaPercent: 10},
-    { ticker: CoinTickerType.WETH, balance: 1, balanceValue: 1000, deltaPercent: -50},
+    // { ticker: CoinTickerType.WETH, balance: 1, balanceValue: 1000, deltaPercent: -50},
   ] as any[]
   return (
     <div>
-      <FunTypography level={2} overrideStyles="text-[18px]">Coins</FunTypography>
-      <div>
+      <FunTypography level={2} overrideStyles="text-[18px] pb-2">Coins</FunTypography>
+      <div className="flex flex-col gap-1">
         {coinsList?.map((coinItem) => (
           <CoinListItem key={coinItem.ticker} coinItem={coinItem} />
         ))}
