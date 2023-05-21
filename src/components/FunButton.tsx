@@ -25,20 +25,22 @@ interface FunButtonProps {
   prefixIcon?: ReactNode;
   onClick?: (p?: any) => void;
   styleClass?: string;
-  textClass?: string;
+  textFontWeight?: string;
+  isDisabled?: boolean;
 }
 
-export default function FunButton({ type = "primary", text = "", prefixIcon = null, onClick = () => {}, styleClass = "", textClass = "" }: FunButtonProps) {
-  const baseClasses = "flex flex-row justify-center items-center p-4 gap-1.5 w-full rounded-2xl hover:opacity-70"
+export default function FunButton({ type = "primary", text = "", prefixIcon = null, onClick = () => {}, styleClass = "", textFontWeight = "font-semibold", isDisabled = false }: FunButtonProps) {
+  const baseClasses = "flex flex-row justify-center items-center p-4 gap-1.5 w-full rounded-2xl"
   const borderClass = useMemo(() => typeMap?.[type].border, [type]);
   const backgroundClass = useMemo(() => typeMap?.[type].bg, [type]);
   const textColorClass = useMemo(() => typeMap?.[type].textColor, [type]);
+  const hoverAndOpacityClass = useMemo(() => isDisabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:opacity-70", [isDisabled]);
   // Composite
-  const buttonClassName = useMemo(() => `${baseClasses} ${borderClass} ${backgroundClass} ${styleClass}`, [borderClass, backgroundClass, styleClass]);
+  const buttonClassName = useMemo(() => `${baseClasses} ${hoverAndOpacityClass} ${borderClass} ${backgroundClass} ${styleClass}`, [hoverAndOpacityClass, borderClass, backgroundClass, styleClass]);
   return (
-    <button className={buttonClassName} onClick={onClick}>
+    <button className={buttonClassName} onClick={(e) => !isDisabled && onClick?.(e)}>
       {prefixIcon}
-      <FunTypography level={3} textColor={textColorClass} overrideStyles={textClass}>
+      <FunTypography level={3} textColor={textColorClass} fontWeight={textFontWeight}>
         {text}
       </FunTypography>
     </button>

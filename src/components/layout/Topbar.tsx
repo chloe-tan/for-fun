@@ -17,7 +17,7 @@ export default function TopBar({ showBack = false }: TopBarProps) {
     <div className="w-full px-6 py-[18px] border border-gray-200 flex flex-row justify-between">
       <div>
         {showBack ? (
-          <FunButton text="Back" type="link" prefixIcon={<LeftArrowIcon />} styleClass="p-0" textClass="font-normal" onClick={() => router?.back()} />
+          <FunButton text="Back" type="link" prefixIcon={<LeftArrowIcon />} styleClass="py-0 px-0" textFontWeight="font-normal" onClick={() => router?.back()} />
         ): (
           <SettingsIcon />
         )}

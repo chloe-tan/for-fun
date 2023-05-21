@@ -14,6 +14,7 @@ export function WithStore({ children }: { children: ReactNode }) {
   const [reloadCounter, setReloadCounter] = useState(0);
   const refreshStore = () => setReloadCounter((prev) => prev + 1);
 
+  // Run once on component mount
   // We assume user is already logged in
   useEffect(() => {
     async function fetchWallet() {
@@ -27,6 +28,7 @@ export function WithStore({ children }: { children: ReactNode }) {
       setIsWalletInfoLoading(false);
     }
     !walletInfo && fetchWallet().catch(console.error);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

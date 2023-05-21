@@ -79,12 +79,20 @@ export async function getWalletInfo(): Promise<WalletInfo> {
 
     const returnInfo = {
       address: addr,
-      ethBalanceCount,
-      ethBalanceUsd,
-      usdcBalanceCount: 0,
-      usdcBalanceUsd: 0,
-      daiBalanceCount: 0,
-      daiBalanceUsd: 0,
+      coinBalanceInfo: {
+        [CoinTickerType.ETH]: {
+          balanceCount: ethBalanceCount,
+          balanceUsd: ethBalanceUsd,
+        },
+        [CoinTickerType.USDC]: {
+          balanceCount: 0,
+          balanceUsd: 0,
+        },
+        [CoinTickerType.DAI]: {
+          balanceCount: 0,
+          balanceUsd: 0,
+        }
+      }
     } as WalletInfo;
     return returnInfo;
   } catch (err) {
