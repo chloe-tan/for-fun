@@ -1,3 +1,4 @@
+import { WalletInfo } from "@/const/wallet";
 import { getWalletInfo } from "@/utils/frontend/fetchFromApiService";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
@@ -8,7 +9,7 @@ export function useStore() {
 }
 
 export function WithStore({ children }: { children: ReactNode }) {
-  const [walletInfo, setWalletInfo] = useState(null);
+  const [walletInfo, setWalletInfo] = useState<WalletInfo>(null);
   const [isWalletInfoLoading, setIsWalletInfoLoading] = useState(true);
   const [reloadCounter, setReloadCounter] = useState(0);
   const refreshStore = () => setReloadCounter((prev) => prev + 1);
@@ -17,7 +18,7 @@ export function WithStore({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function fetchWallet() {
       setIsWalletInfoLoading(true);
-      const walletInfo: any = await getWalletInfo();
+      const walletInfo: WalletInfo = await getWalletInfo();
       if (walletInfo) {
         setWalletInfo(walletInfo);
       } else {

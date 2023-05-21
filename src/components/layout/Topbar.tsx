@@ -1,14 +1,27 @@
 import { truncateAndShortenStr } from "@/utils/frontend/utils";
 import FunTypography from "../FunTypography";
 import CircleWrapper from "../CircleWrapper";
-import { SettingsIcon } from "../Icons";
+import { LeftArrowIcon, SettingsIcon } from "../Icons";
 import { useStore } from "../hooks/useStore";
+import { useRouter } from "next/router";
+import FunButton from "../FunButton";
 
-export default function TopBar() {
+export interface TopBarProps {
+  showBack?: boolean;
+}
+
+export default function TopBar({ showBack = false }: TopBarProps) {
+  const router = useRouter();
   const [{ walletInfo }] = useStore();
   return (
     <div className="w-full px-6 py-[18px] border border-gray-200 flex flex-row justify-between">
-      <div><SettingsIcon /></div>
+      <div>
+        {showBack ? (
+          <FunButton text="Back" type="link" prefixIcon={<LeftArrowIcon />} styleClass="p-0" textClass="font-normal" onClick={() => router?.back()} />
+        ): (
+          <SettingsIcon />
+        )}
+      </div>
       <div className="flex items-center gap-2 align-middle">
         <CircleWrapper />
         <FunTypography level={3}>Wallet</FunTypography>

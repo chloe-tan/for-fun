@@ -1,6 +1,9 @@
 import CircleWrapper from "@/components/CircleWrapper";
 import FunTypography from "@/components/FunTypography";
+import { useStore } from "@/components/hooks/useStore";
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
+import { formatCryptoAndStringify } from "@/utils/frontend/utils";
+import { useMemo } from "react";
 
 function DeltaTag({ deltaValue = 0 }) {
   if (deltaValue === 0) return null;
@@ -21,10 +24,10 @@ function CoinListItem({ coinItem }: { coinItem: any }) {
   return (
     <div className="flex flex-row py-2 justify-between items-center">
       <div id="left-container" className="flex flex-row gap-4 items-center">
-        <CircleWrapper size="h-10 w-10" bgColor={CoinTickerDetailMap[coinItem.ticker as CoinTickerType].bgClass} text={CoinTickerDetailMap[coinItem.ticker as CoinTickerType]?.icon?.()} textStyles="pt-0 pr-0"/>
+        <CircleWrapper size="h-10 w-10" bgColor={CoinTickerDetailMap[coinItem.ticker as CoinTickerType].bgClass} text={CoinTickerDetailMap[coinItem.ticker as CoinTickerType]?.icon?.()} textStyles="pt-0 pr-0" />
         <div className="flex flex-col justify-center">
           <FunTypography fontWeight="font-normal">{CoinTickerDetailMap?.[coinItem.ticker as CoinTickerType].label}</FunTypography>
-          <FunTypography level={4} fontWeight="font-normal" textColor="text-fgray">{coinItem.balance} {coinItem.ticker}</FunTypography>
+          <FunTypography level={4} fontWeight="font-normal" textColor="text-fgray">{formatCryptoAndStringify(coinItem.balance, coinItem.ticker)}</FunTypography>
         </div>
       </div>
       <div id="right-container" className="flex flex-col justify-center items-end">
@@ -36,12 +39,16 @@ function CoinListItem({ coinItem }: { coinItem: any }) {
 }
 
 export default function CoinsListSection() {
-  const coinsList = [
-    { ticker: CoinTickerType.ETH, balance: 20, balanceValue: 20000, deltaPercent: -1.5},
-    { ticker: CoinTickerType.USDC, balance: 20, balanceValue: 20000, deltaPercent: 2},
-    { ticker: CoinTickerType.DAI, balance: 1, balanceValue: 1000, deltaPercent: 10},
-    // { ticker: CoinTickerType.WETH, balance: 1, balanceValue: 1000, deltaPercent: -50},
-  ] as any[]
+
+  const [{ walletInfo }] = useStore();
+  const coinsList = useMemo(() => {
+    return [
+      { ticker: CoinTickerType.ETH, balance: walletInfo?.ethBalanceCount, balanceValue: walletInfo?.ethBalanceUsd, deltaPercent: -1.5 },
+        { ticker: CoinTickerType.USDC, balance: walletInfo?.usdcBalanceCount, balanceValue: walletInfo?.usdcBalanceUsd, deltaPercent: 2},
+        { ticker: CoinTickerType.DAI, balance: walletInfo?.daiBalanceCount, balanceValue: walletInfo?.daiBalanceUsd, deltaPercent: 10}
+    ]
+  }, [])
+
   return (
     <div>
       <FunTypography level={2} overrideStyles="text-[18px] pb-2">Coins</FunTypography>

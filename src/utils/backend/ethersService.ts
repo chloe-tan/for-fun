@@ -24,6 +24,7 @@ async function getTokenPriceInUSD(tokenId: string): Promise<number> {
 
 export async function getEthBalance(address: string) {
   const balance: BigNumber = await provider.getBalance(address);
+  console.log("balance_", balance);
   const ethPriceUSD: number = await getEthPriceInUSD();
   const balanceInUSD: number = parseFloat(ethers.utils.formatEther(balance)) * ethPriceUSD;
   return { count: ethers.utils.formatEther(balance), usdAmount: balanceInUSD };

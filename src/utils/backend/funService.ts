@@ -1,5 +1,6 @@
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { getEthBalance, getTokenBalance } from "./ethersService";
+import { WalletInfo } from "@/const/wallet";
 
 const ethers = require("ethers")
 const { FunWallet, configureEnvironment } = require("fun-wallet")
@@ -67,10 +68,11 @@ async function swapTokens({ inToken, outToken, amount }: any) {
 //   }
 // }
 
-export async function getWalletInfo() {
+export async function getWalletInfo(): Promise<WalletInfo> {
   try {
-    const addr = await FunWallet.getAddress(FUN_ADDRESS, 0, CHAIN_ID, API_KEY)
+    // const addr = await FunWallet.getAddress(FUN_ADDRESS, 2, CHAIN_ID, API_KEY)
     // const addr = "0x4C8DB9bb25063a729d819BaCDD0c3EB36003E212";
+    const addr = "0x150aD6F41c2D56c2f6a6bA73560105aA73b5001b";
     // TODO: Promise all
     const { count: ethBalanceCount, usdAmount: ethBalanceUsd } = await getEthBalance(addr);
     // const { count: usdcBalanceCount, usdAmount: usdcBalanceUsd } = await getTokenBalance(addr, CoinTickerType.USDC);
@@ -83,7 +85,7 @@ export async function getWalletInfo() {
       usdcBalanceUsd: 0,
       daiBalanceCount: 0,
       daiBalanceUsd: 0,
-    }
+    } as WalletInfo;
     return returnInfo;
   } catch (err) {
     console.log(err);

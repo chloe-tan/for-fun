@@ -4,7 +4,7 @@ export enum CoinTickerType {
   ETH = "ETH",
   USDC = "USDC",
   DAI = "DAI",
-  WETH = "WETH",
+  // WETH = "WETH",
 }
 
 export const CoinTickerDetailMap = {
