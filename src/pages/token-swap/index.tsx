@@ -5,7 +5,7 @@ export default function Swap() {
   return (
     <LayoutWrapper topBarProps={{ showBack: true }}>
       <div className="flex flex-col gap-3">
-        <FunTypography level={2}>Send</FunTypography>
+        <FunTypography level={2}>Swap</FunTypography>
       </div>
     </LayoutWrapper>
   )
