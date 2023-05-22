@@ -51,9 +51,10 @@ export default function Swap() {
     // TODO: Fire async txn function
     setIsOverlayLoading(true);
     
+    const txHash = "0x5ae8529721f61082f87e9812cd6149b8c84fc59ad694dbc5751b7c74cb6b609a"
     setTimeout(() => {
       router.push(HOME_ROUTE_BASE);
-      showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { router.push(HISTORY_ROUTE_BASE) } })
+      showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { window.open(`https://goerli.etherscan.io/tx/${txHash}`, "_blank") } })
       setIsOverlayLoading(false);
     }, 5000)
   }, [router, setIsOverlayLoading, showToastMessage])
