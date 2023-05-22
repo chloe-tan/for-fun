@@ -3,7 +3,7 @@ import { Fragment, ReactNode, useMemo } from "react"
 import BottomBarOverlay from "./BottomBarOverlay";
 import ToastComponent from "../ToastComponent";
 import { useStore } from "../hooks/useStore";
-import TopBar from "./TopBar";
+import TopBar from "./TopBarX";
 import LoadingSplash from "../LoadingSplash";
 
 interface LayoutWrapperProps {
