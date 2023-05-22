@@ -3,14 +3,13 @@ import { Fragment, ReactNode, useMemo } from "react"
 import BottomBarOverlay from "./BottomBarOverlay";
 import ToastComponent from "../ToastComponent";
 import { useStore } from "../hooks/useStore";
-import LoadingSplash from "../LoadingSplash";
 import TopBar from "./TopBar";
-import type { TopBarProps } from "./TopBar";
+import LoadingSplash from "../LoadingSplash";
 
 interface LayoutWrapperProps {
   children: ReactNode;
   showBottomBar?: boolean;
-  topBarProps?: TopBarProps;
+  topBarProps?: any;
 }
 
 /**
