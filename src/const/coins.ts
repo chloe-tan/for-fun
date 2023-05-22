@@ -14,20 +14,23 @@ export const CoinTickerDetailMap = {
     icon: EthIcon,
     tokenAddress: "",
     cgKey: "ethereum",
+    decimals: 18,
   },
   [CoinTickerType.USDC]: {
     label: "USD Coin",
     bgClass: "bg-[#2775CA]",
     icon: UsdcIcon,
-    tokenAddress: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    tokenAddress: "0xaa8958047307da7bb00f0766957edec0435b46b5", // goerli
     cgKey: "usd-coin",
+    decimals: 6,
   },
   [CoinTickerType.DAI]: {
     label: "Dai",
     bgClass: "bg-[#F5AC37]",
     icon: DaiIcon,
-    tokenAddress: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    tokenAddress: "0x855af47cdf980a650ade1ad47c78ec1deebe9093", // goerli
     cgKey: "dai",
+    decimals: 6,
   },
   // [CoinTickerType.WETH]: {
   //   label: "WETH",

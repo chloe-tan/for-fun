@@ -72,12 +72,13 @@ async function swapTokens({ inToken, outToken, amount }: any) {
 export async function getWalletInfo(): Promise<WalletInfo> {
   try {
     // const addr = await FunWallet.getAddress(FUN_ADDRESS, 2, CHAIN_ID, API_KEY)
-    // const addr = "0x4C8DB9bb25063a729d819BaCDD0c3EB36003E212";
-    const addr = "0x150aD6F41c2D56c2f6a6bA73560105aA73b5001b";
+    const addr = "0x4C8DB9bb25063a729d819BaCDD0c3EB36003E212";
+    // const addr = "0x150aD6F41c2D56c2f6a6bA73560105aA73b5001b";
     // TODO: Promise all
     const coinPrices = await getCoinPricesInUSD();
-    const { count: ethBalanceCount, usdAmount: ethBalanceUsd } = await getEthBalance(addr, coinPrices?.["ethereum"]?.usd);
-    // const { count: usdcBalanceCount, usdAmount: usdcBalanceUsd } = await getTokenBalance(addr, CoinTickerType.USDC, ...);
+    const { count: ethBalanceCount, usdAmount: ethBalanceUsd } = await getEthBalance(addr, coinPrices?.[CoinTickerDetailMap[CoinTickerType.ETH].cgKey]?.usd);
+    const { count: usdcBalanceCount, usdAmount: usdcBalanceUsd } = await getTokenBalance(addr, CoinTickerType.USDC, coinPrices?.[CoinTickerDetailMap[CoinTickerType.USDC].cgKey].usd);
+    const { count: daiBalanceCount, usdAmount: daiBalanceUsd } = await getTokenBalance(addr, CoinTickerType.DAI, coinPrices?.[CoinTickerDetailMap[CoinTickerType.DAI].cgKey].usd);
 
     const returnInfo = {
       address: addr,
@@ -85,17 +86,17 @@ export async function getWalletInfo(): Promise<WalletInfo> {
         [CoinTickerType.ETH]: {
           balanceCount: ethBalanceCount,
           balanceUsd: ethBalanceUsd,
-          delta: coinPrices?.["ethereum"]?.usd_24h_change,
+          delta: coinPrices?.[CoinTickerDetailMap[CoinTickerType.ETH].cgKey]?.usd_24h_change,
         },
         [CoinTickerType.USDC]: {
-          balanceCount: 0,
-          balanceUsd: 0,
-          delta: coinPrices?.["usd-coin"]?.usd_24h_change,
+          balanceCount: usdcBalanceCount,
+          balanceUsd: usdcBalanceUsd,
+          delta: coinPrices?.[CoinTickerDetailMap[CoinTickerType.USDC].cgKey]?.usd_24h_change,
         },
         [CoinTickerType.DAI]: {
-          balanceCount: 0,
-          balanceUsd: 0,
-          delta: coinPrices?.["dai"]?.usd_24h_change,
+          balanceCount: daiBalanceCount,
+          balanceUsd: daiBalanceUsd,
+          delta: coinPrices?.[CoinTickerDetailMap[CoinTickerType.DAI].cgKey]?.usd_24h_change,
         }
       }
     } as WalletInfo;

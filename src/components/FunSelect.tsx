@@ -7,19 +7,21 @@ import { ChevronDownIcon } from "./Icons";
 
 function CoinMenuPopoverContent({ selectedTicker, onChangeSelection, hideTickers }: { selectedTicker: CoinTickerType; onChangeSelection: Function; hideTickers: CoinTickerType[] }) {
   return (
-    <div className="flex flex-col p-3 gap-1 z-20 w-full bg-white rounded-[16px]">
-      {Object.keys(CoinTickerType).filter((coinTicker) => !hideTickers.includes(coinTicker)).map((coinTicker) => {
-        const isActive = selectedTicker === coinTicker;
-        return (
-          <div
-            key={coinTicker}
-            className={`px-3 rounded-[12px] ${isActive ? "bg-[#00000014]" : "bg-transparent"} hover:bg-gray-200`}
-            onClick={() => !isActive && onChangeSelection?.(coinTicker)}
-          >
-            <CoinListItem coinItem={{ ticker: coinTicker }} showBalance={false} />
-          </div>
-        )
-      })}
+    <div>
+      <div className="flex flex-col p-3 gap-1 z-20 w-full bg-white rounded-[16px]">
+        {Object.keys(CoinTickerType).filter((coinTicker: string) => !hideTickers.includes(coinTicker as CoinTickerType)).map((coinTicker) => {
+          const isActive = selectedTicker === coinTicker;
+          return (
+            <div
+              key={coinTicker}
+              className={`px-3 rounded-[12px] ${isActive ? "bg-[#00000014]" : "bg-transparent"} hover:bg-gray-200`}
+              onClick={() => !isActive && onChangeSelection?.(coinTicker)}
+            >
+              <CoinListItem coinItem={{ ticker: coinTicker }} showBalance={false} />
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
@@ -65,7 +67,7 @@ export default function FunCoinSelect({ selectedTicker, setSelectedTicker, diffK
   }, [setSelectedTicker, handleCloseMenu]);
 
   return (
-    <div className="relative inline-block">
+    <div className="">
       <div
         id={selectContainerId}
         onClick={handleOpenMenu}
@@ -78,15 +80,15 @@ export default function FunCoinSelect({ selectedTicker, setSelectedTicker, diffK
       >
         <div className="flex flex-row flex-no-wrap gap-2">
           <CircleWrapper
-            bgColor={CoinTickerDetailMap?.[selectedTicker]?.bgClass || "bg-[#00000014]" }
-            text={CoinTickerDetailMap[selectedTicker]?.icon?.() || ""} 
+            bgColor={CoinTickerDetailMap?.[selectedTicker]?.bgClass || "bg-[#00000014]"}
+            text={CoinTickerDetailMap[selectedTicker]?.icon?.() || ""}
           />
           <FunTypography fontWeight="font-normal" textColor="text-fblack">{selectedTicker || "Choose Coin"}</FunTypography>
         </div>
         <ChevronDownIcon sizeClass="h-5 w-4" />
       </div>
       {isMenuOpened ? (
-        <div id={menuContainerId} className="fixed z-50 mt-2 right-[41%] w-[312px] rounded-[16px] shadow-md border">
+        <div id={menuContainerId} className="fixed z-50 mt-2 w-[312px] rounded-[16px] left-[50%] transform translate-x-[-50%] shadow-md border">
           <CoinMenuPopoverContent selectedTicker={selectedTicker} onChangeSelection={onChangeSelection} hideTickers={hideTickers} />
         </div>
       ) : null}
