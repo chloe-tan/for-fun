@@ -9,6 +9,7 @@ export default function WalletInfoSection() {
   // TODO: use prices in store frontend
   // Sum of all usd balances
   const walletBalance = useMemo(() => {
+    if (!walletInfo) return 0;
     return Object.keys(walletInfo?.coinBalanceInfo).reduce((acc, cur) => acc + walletInfo?.coinBalanceInfo?.[cur]?.balanceUsd, 0);
   }, [walletInfo])
   return (

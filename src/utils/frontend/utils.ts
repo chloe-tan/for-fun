@@ -1,4 +1,4 @@
-import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
+import { CoinTickerDetailMap } from "@/const/coins";
 
 export function truncateAndShortenStr(str: string, visiblePrefix = 10, visibleSuffix = 10) {
   if (str?.length > visiblePrefix + visibleSuffix + 4) {
