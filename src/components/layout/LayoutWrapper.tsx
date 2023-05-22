@@ -30,7 +30,7 @@ export default function LayoutWrapper({ children, showBottomBar = false, topBarP
         ) : (
           <Fragment>
             <TopBar {...topBarProps} />
-            <div className={`w-full h-full px-6 py-4 overflow-auto ${innerPaddingClass}`}>
+            <div className={`w-full h-full px-6 pt-4 pb-6 overflow-auto ${innerPaddingClass}`}>
               {children}
             </div>
             {showBottomBar ? <BottomBarOverlay /> : null}

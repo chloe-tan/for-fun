@@ -1,6 +1,7 @@
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { getEthBalance, getTokenBalance } from "./ethersService";
 import { WalletInfo } from "@/const/wallet";
+import { getCoinPricesInUSD } from "../common/coingeckoService";
 
 const ethers = require("ethers")
 const { FunWallet, configureEnvironment } = require("fun-wallet")
@@ -74,8 +75,9 @@ export async function getWalletInfo(): Promise<WalletInfo> {
     // const addr = "0x4C8DB9bb25063a729d819BaCDD0c3EB36003E212";
     const addr = "0x150aD6F41c2D56c2f6a6bA73560105aA73b5001b";
     // TODO: Promise all
-    const { count: ethBalanceCount, usdAmount: ethBalanceUsd, delta: ethDelta } = await getEthBalance(addr);
-    // const { count: usdcBalanceCount, usdAmount: usdcBalanceUsd } = await getTokenBalance(addr, CoinTickerType.USDC);
+    const coinPrices = await getCoinPricesInUSD();
+    const { count: ethBalanceCount, usdAmount: ethBalanceUsd } = await getEthBalance(addr, coinPrices?.["ethereum"]?.usd);
+    // const { count: usdcBalanceCount, usdAmount: usdcBalanceUsd } = await getTokenBalance(addr, CoinTickerType.USDC, ...);
 
     const returnInfo = {
       address: addr,
@@ -83,17 +85,17 @@ export async function getWalletInfo(): Promise<WalletInfo> {
         [CoinTickerType.ETH]: {
           balanceCount: ethBalanceCount,
           balanceUsd: ethBalanceUsd,
-          delta: ethDelta,
+          delta: coinPrices?.["ethereum"]?.usd_24h_change,
         },
         [CoinTickerType.USDC]: {
           balanceCount: 0,
           balanceUsd: 0,
-          delta: 0,
+          delta: coinPrices?.["usd-coin"]?.usd_24h_change,
         },
         [CoinTickerType.DAI]: {
           balanceCount: 0,
           balanceUsd: 0,
-          delta: 0,
+          delta: coinPrices?.["dai"]?.usd_24h_change,
         }
       }
     } as WalletInfo;

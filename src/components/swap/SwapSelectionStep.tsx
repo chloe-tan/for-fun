@@ -2,11 +2,12 @@ import React, { Fragment, useMemo } from "react";
 import FunTypography from "../FunTypography";
 import FunButton from "../FunButton";
 import SwapDivider from "./SwapDivider";
-import { CoinTickerType } from "@/const/coins";
+import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { useStore } from "../hooks/useStore";
-import { formatCryptoAndStringify } from "@/utils/frontend/utils";
+import { formatCryptoAndStringify, formatNumberAndStringify } from "@/utils/frontend/utils";
 import FunSelect from "../FunSelect";
 import FunInput from "../FunInput";
+import { InfoIconFilled } from "../Icons";
 
 function FromContainer({ selectedFromTicker, setSelectedFromTicker, fromTickerAmount, setFromTickerAmount }: any) {
   const [{ walletInfo }] = useStore();
@@ -35,21 +36,40 @@ function FromContainer({ selectedFromTicker, setSelectedFromTicker, fromTickerAm
   )
 }
 
-function ToContainer({ selectedToTicker, setSelectedToTicker }: any) {
+function ToContainer({ selectedToTicker, setSelectedToTicker, selectedFromTicker, toTickerAmount }: any) {
   return (
     <div className="flex flex-col gap-6 min-h-[128px]">
       <div id="coin-input" className="flex flex-row justify-between items-center">
         <div className="flex flex-row gap-4 items-center">
           <FunTypography level={3} fontWeight="font-normal" textColor="text-fgray">To</FunTypography>
-          <FunSelect diffKey="to" selectedTicker={selectedToTicker} setSelectedTicker={setSelectedToTicker} />
+          <FunSelect diffKey="to" selectedTicker={selectedToTicker} setSelectedTicker={setSelectedToTicker} hideTickers={[selectedFromTicker]}/>
         </div>
       </div>
       {selectedToTicker ? (
         <div id="amount-input" className="flex flex-row items-center">
-          <FunTypography level={1} textColor="text-fblack">|&nbsp;</FunTypography>
+          <FunTypography level={1} textColor="text-fblack">{formatNumberAndStringify(toTickerAmount) ?? "|"}&nbsp;</FunTypography>
           <FunTypography level={1} textColor="text-fgray">{selectedToTicker}</FunTypography>
         </div>
       ): null}
+    </div>
+  )
+}
+
+
+function ConversionInfo({ fromTicker, toTicker }: { fromTicker: CoinTickerType; toTicker: CoinTickerType }) {
+  const [{ coinPricesInfo, isCoinPricesInfoLoading }] = useStore();
+
+  const conversionText = useMemo(() => {
+    if (isCoinPricesInfoLoading) return "Checking...";
+    const toPrice = coinPricesInfo?.[CoinTickerDetailMap?.[toTicker]?.cgKey]?.usd;
+    const fromPrice = coinPricesInfo?.[CoinTickerDetailMap?.[fromTicker]?.cgKey]?.usd;
+    const conversionValue = (fromPrice / toPrice); 
+    return `1 ${toTicker} = ${formatNumberAndStringify(conversionValue)} ${fromTicker}`;
+  }, [coinPricesInfo, fromTicker, isCoinPricesInfoLoading, toTicker])
+  return (
+    <div id="conversion" className="flex flex-row gap-2 items-center">
+      <InfoIconFilled sizeClass="w-5 h-5" />
+      <FunTypography level={4} fontWeight="font-normal" textColor="text-fgray">{conversionText}</FunTypography>
     </div>
   )
 }
@@ -62,7 +82,6 @@ interface SwapSelectionStepProps {
   fromTickerAmount: number;
   setFromTickerAmount: React.Dispatch<React.SetStateAction<number>>;
   toTickerAmount: number;
-  setToTickerAmount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function SwapSelectionStep(props: SwapSelectionStepProps) {
@@ -74,7 +93,6 @@ export default function SwapSelectionStep(props: SwapSelectionStepProps) {
     fromTickerAmount,
     setFromTickerAmount,
     toTickerAmount,
-    setToTickerAmount,
   } = props;
   const [{ walletInfo }] = useStore();
   const hasInsufficentBalance = useMemo(() => {
@@ -98,7 +116,13 @@ export default function SwapSelectionStep(props: SwapSelectionStepProps) {
           setFromTickerAmount={setFromTickerAmount}
         />
         <SwapDivider />
-        <ToContainer selectedToTicker={selectedToTicker} setSelectedToTicker={setSelectedToTicker} />
+        <ToContainer 
+          selectedToTicker={selectedToTicker} 
+          setSelectedToTicker={setSelectedToTicker} 
+          selectedFromTicker={selectedFromTicker}
+          toTickerAmount={toTickerAmount}
+        />
+        {selectedFromTicker && selectedToTicker ? <ConversionInfo fromTicker={selectedFromTicker} toTicker={selectedToTicker} /> : null}
       </div>
       <FunButton type="primary" text={buttonText} isDisabled={isButtonDisabled} />
     </div>

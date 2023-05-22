@@ -8,7 +8,7 @@ import { useMemo } from "react";
 function DeltaTag({ deltaValue = 0 }) {
   if (deltaValue === 0) return null;
 
-  const deltaText = formatNumberAndStringify(deltaValue, { softDecimalPrecision: 2 });
+  const deltaText = formatNumberAndStringify(deltaValue, { softDecimalPrecision: 2, aggresiveDecimalPrecision: 2 });
   const bgClass = deltaValue < 0 ? 'bg-[#CE383814]' : 'bg-[#38CE6E14]'
   const textClass = deltaValue < 0 ? 'text-fred' : 'text-fgreen';
   const renderText = deltaValue < 0 ? `${deltaText}%` : `+${deltaText}%`;

@@ -5,10 +5,10 @@ import { useCallback, useMemo, useState } from "react";
 import CircleWrapper from "./CircleWrapper";
 import { ChevronDownIcon } from "./Icons";
 
-function CoinMenuPopoverContent({ selectedTicker, onChangeSelection }: { selectedTicker: CoinTickerType; onChangeSelection: Function }) {
+function CoinMenuPopoverContent({ selectedTicker, onChangeSelection, hideTickers }: { selectedTicker: CoinTickerType; onChangeSelection: Function; hideTickers: CoinTickerType[] }) {
   return (
     <div className="flex flex-col p-3 gap-1 z-20 w-full bg-white rounded-[16px]">
-      {Object.keys(CoinTickerType).map((coinTicker) => {
+      {Object.keys(CoinTickerType).filter((coinTicker) => !hideTickers.includes(coinTicker)).map((coinTicker) => {
         const isActive = selectedTicker === coinTicker;
         return (
           <div
@@ -29,10 +29,11 @@ interface FunCoinSelectProps {
   setSelectedTicker: React.Dispatch<React.SetStateAction<CoinTickerType | null>>
   showPlaceholderOption?: boolean;
   diffKey: string;
+  hideTickers?: CoinTickerType[];
 }
 
 // TODO: Further abstract into a general select component
-export default function FunCoinSelect({ selectedTicker, setSelectedTicker, diffKey = "" }: FunCoinSelectProps) {
+export default function FunCoinSelect({ selectedTicker, setSelectedTicker, diffKey = "", hideTickers = [] }: FunCoinSelectProps) {
 
   const selectContainerId = `selected-container-${diffKey}`
   const menuContainerId = `option-menu-popup-${diffKey}`
@@ -85,8 +86,8 @@ export default function FunCoinSelect({ selectedTicker, setSelectedTicker, diffK
         <ChevronDownIcon sizeClass="h-5 w-4" />
       </div>
       {isMenuOpened ? (
-        <div id={menuContainerId} className="fixed z-50 mt-2 right-[140px] w-[312px] rounded-[16px] shadow-md border">
-          <CoinMenuPopoverContent selectedTicker={selectedTicker} onChangeSelection={onChangeSelection} />
+        <div id={menuContainerId} className="fixed z-50 mt-2 right-[125px] w-[312px] rounded-[16px] shadow-md border">
+          <CoinMenuPopoverContent selectedTicker={selectedTicker} onChangeSelection={onChangeSelection} hideTickers={hideTickers} />
         </div>
       ) : null}
     </div>
