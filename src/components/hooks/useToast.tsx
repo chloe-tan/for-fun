@@ -8,17 +8,24 @@ export default function useToast() {
   return useContext(ToastContext);
 }
 
-const TOAST_DURATION = 3000;
+const TOAST_DURATION = 5000;
 const defaultToastInfo = {
   prefix: null,
   message: "",
   suffix: null,
   suffixAction: () => { },
+} as ToastMessageInfo
+
+export type ToastMessageInfo = {
+  prefix: ReactNode;
+  message: string;
+  suffix: ReactNode;
+  suffixAction: (p?:any) => void
 }
 
 // Context
 export function WithToast({ children }: { children: ReactNode }) {
-  const [toastMessageInfo, setToastMessageInfo] = useState(defaultToastInfo);
+  const [toastMessageInfo, setToastMessageInfo] = useState<ToastMessageInfo>(defaultToastInfo);
   const [showToast, setShowToast] = useState(false);
 
   const showToastMessage = ({ prefix = null, message = "", suffix = null, suffixAction = () => { } }) => {

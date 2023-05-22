@@ -6,9 +6,10 @@ import { useMemo } from "react";
 
 export default function WalletInfoSection() {
   const [{ walletInfo }] = useStore();
+  // TODO: use prices in store frontend
   // Sum of all usd balances
   const walletBalance = useMemo(() => {
-    return walletInfo?.ethBalanceUsd + walletInfo?.usdcBalanceUsd + walletInfo?.daiBalanceUsd;
+    return Object.keys(walletInfo?.coinBalanceInfo).reduce((acc, cur) => acc + walletInfo?.coinBalanceInfo?.[cur]?.balanceUsd, 0);
   }, [walletInfo])
   return (
     <div id="wallet-info-section" className="flex flex-col items-center jusitfy-center gap-3">

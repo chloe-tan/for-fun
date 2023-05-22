@@ -82,6 +82,7 @@ interface SwapSelectionStepProps {
   fromTickerAmount: number;
   setFromTickerAmount: React.Dispatch<React.SetStateAction<number>>;
   toTickerAmount: number;
+  onClickReview: (p?: any) => void;
 }
 
 export default function SwapSelectionStep(props: SwapSelectionStepProps) {
@@ -93,6 +94,7 @@ export default function SwapSelectionStep(props: SwapSelectionStepProps) {
     fromTickerAmount,
     setFromTickerAmount,
     toTickerAmount,
+    onClickReview,
   } = props;
   const [{ walletInfo }] = useStore();
   const hasInsufficentBalance = useMemo(() => {
@@ -124,7 +126,7 @@ export default function SwapSelectionStep(props: SwapSelectionStepProps) {
         />
         {selectedFromTicker && selectedToTicker ? <ConversionInfo fromTicker={selectedFromTicker} toTicker={selectedToTicker} /> : null}
       </div>
-      <FunButton type="primary" text={buttonText} isDisabled={isButtonDisabled} />
+      <FunButton type="primary" text={buttonText} isDisabled={isButtonDisabled} onClick={onClickReview} />
     </div>
   )
 }

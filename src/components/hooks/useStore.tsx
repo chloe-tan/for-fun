@@ -17,13 +17,14 @@ export function WithStore({ children }: { children: ReactNode }) {
   const [reloadCounter, setReloadCounter] = useState(0);
   const refreshStore = () => setReloadCounter((prev) => prev + 1);
 
-
-
   async function getCoinPricesInfo() {
     setIsCoinPricesInfoLoading(true);
     const info = await getCoinPricesInUSD();
     setCoinPricesInfo(info);
-    setIsCoinPricesInfoLoading(false);
+    // To prevent flashing if it loads too fast lol
+    setTimeout(() => {
+      setIsCoinPricesInfoLoading(false);
+    }, 2000);
   }
 
   // Run once on component mount

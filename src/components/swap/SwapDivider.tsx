@@ -1,9 +1,9 @@
 import CircleWrapper from "../CircleWrapper"
 import { SwapIcon } from "../Icons"
 
-function Line() {
+export function Line() {
   return (
-    <div className="h-[1px] rounded-[16px] bg-gray-300 flex flex-1" />
+    <div className="h-[1px] rounded-[16px] bg-[#0000001F] flex flex-1" />
   )
 }
 

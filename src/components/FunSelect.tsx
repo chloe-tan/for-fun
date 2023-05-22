@@ -86,7 +86,7 @@ export default function FunCoinSelect({ selectedTicker, setSelectedTicker, diffK
         <ChevronDownIcon sizeClass="h-5 w-4" />
       </div>
       {isMenuOpened ? (
-        <div id={menuContainerId} className="fixed z-50 mt-2 right-[125px] w-[312px] rounded-[16px] shadow-md border">
+        <div id={menuContainerId} className="fixed z-50 mt-2 right-[41%] w-[312px] rounded-[16px] shadow-md border">
           <CoinMenuPopoverContent selectedTicker={selectedTicker} onChangeSelection={onChangeSelection} hideTickers={hideTickers} />
         </div>
       ) : null}

@@ -6,7 +6,7 @@ export default function Send() {
   return (
     <LayoutWrapper topBarProps={{ showBack: true }}>
       <div className="flex flex-col gap-3">
-        <FunTypography level={2}>Send</FunTypography>
+        <FunTypography level={2} overrideStyles="pt-2 pb-2">Send</FunTypography>
         <FunUnsupported />
       </div>
     </LayoutWrapper>

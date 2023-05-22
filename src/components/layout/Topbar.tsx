@@ -13,8 +13,9 @@ export interface TopBarProps {
 export default function TopBar({ showBack = false }: TopBarProps) {
   const router = useRouter();
   const [{ walletInfo }] = useStore();
+  const py = showBack ? "py-6" : "py-[18px]";
   return (
-    <div className="w-full px-6 py-[18px] border border-gray-200 flex flex-row justify-between">
+    <div className={`w-full px-6 ${py} border border-gray-200 flex flex-row justify-between`}>
       <div>
         {showBack ? (
           <FunButton text="Back" type="link" prefixIcon={<LeftArrowIcon />} styleClass="py-0 px-0" textFontWeight="font-normal" onClick={() => router?.back()} />
