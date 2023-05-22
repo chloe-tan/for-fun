@@ -6,7 +6,7 @@ import { useStore } from "../hooks/useStore";
 import { useRouter } from "next/router";
 import FunButton from "../FunButton";
 
-export interface TopBarProps {
+export type TopBarProps = {
   showBack?: boolean;
 }
 

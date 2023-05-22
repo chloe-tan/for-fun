@@ -2,15 +2,12 @@ import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { getEthBalance, getTokenBalance } from "./ethersService";
 import { WalletInfo } from "@/const/wallet";
 import { getCoinPricesInUSD } from "../common/coingeckoService";
-
-const ethers = require("ethers")
 const { FunWallet, configureEnvironment } = require("fun-wallet")
 const { Eoa } = require("fun-wallet/auth")
 
 const FUN_ADDRESS = process.env.FUN_ADDRESS;
 const PRIVATE_KEY = process.env.FUN_PRIVATE_KEY;
 const API_KEY = process.env.FUN_API_KEY;
-const CHAIN_ID = process.env.CHAIN_ID;
 // FIXME: Are there typescript types from fun lib?
 let funWallet: any = null;
 let auth: any = null;
