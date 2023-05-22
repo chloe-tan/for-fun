@@ -1,10 +1,11 @@
 import { APP_BG_STYLE, LAYOUT_WIDTH_PX, LAYOUT_HEIGHT_PX } from "@/const/layout";
 import { Fragment, ReactNode, useMemo } from "react"
 import BottomBarOverlay from "./BottomBarOverlay";
-import TopBar, { TopBarProps } from "./TopBar";
 import ToastComponent from "../ToastComponent";
 import { useStore } from "../hooks/useStore";
 import LoadingSplash from "../LoadingSplash";
+import TopBar from "./TopBar";
+import type { TopBarProps } from "./TopBar";
 
 interface LayoutWrapperProps {
   children: ReactNode;
