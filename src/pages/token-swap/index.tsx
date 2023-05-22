@@ -60,7 +60,7 @@ export default function Swap() {
   }, [router, setIsOverlayLoading, showToastMessage])
 
   return (
-    <LayoutWrapper topBarProps={{ showBack: true }}>
+    <LayoutWrapper topBarProps={{ showBack: true }} title="Swap">
       {step === SwapStep.SELECTION && (
         <SwapSelectionStep
           selectedFromTicker={selectedFromTicker}

@@ -4,7 +4,7 @@ import LayoutWrapper from "@/components/layout/LayoutWrapper";
 
 export default function Send() {
   return (
-    <LayoutWrapper topBarProps={{ showBack: true }}>
+    <LayoutWrapper topBarProps={{ showBack: true }} title="Send">
       <div className="flex flex-col gap-3">
         <FunTypography level={2} overrideStyles="pt-2 pb-2">Send</FunTypography>
         <FunUnsupported />

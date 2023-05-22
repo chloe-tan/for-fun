@@ -5,18 +5,20 @@ import ToastComponent from "../ToastComponent";
 import { useStore } from "../hooks/useStore";
 import TopBar from "./TopBarX";
 import LoadingSplash from "../LoadingSplash";
+import Head from "next/head";
 
 interface LayoutWrapperProps {
   children: ReactNode;
   showBottomBar?: boolean;
   topBarProps?: any;
+  title?: string;
 }
 
 /**
  * Layout wrapper component
  * Wrap all first layer page components e.g. pages/home/index.tsx using this
  */
-export default function LayoutWrapper({ children, showBottomBar = false, topBarProps = {} }: LayoutWrapperProps) {
+export default function LayoutWrapper({ children, showBottomBar = false, topBarProps = {}, title = "" }: LayoutWrapperProps) {
   const [{ isWalletInfoLoading, isOverlayLoading }] = useStore();
   const opacityClass = useMemo(() => isOverlayLoading ? "opacity-20" : "", [isOverlayLoading]);
   const className = useMemo(() => {
@@ -25,9 +27,14 @@ export default function LayoutWrapper({ children, showBottomBar = false, topBarP
   const innerPaddingClass = showBottomBar ? `pb-[64px]` : "";
   return (
     <Fragment>
+      <Head>
+        <title>Fun{title ? ` | ${title}` : ""}</title>
+        <meta property="og:type" content="website" />
+        {/* TODO: OgImage metas goe here */}
+      </Head>
       {isOverlayLoading || isWalletInfoLoading ? <LoadingSplash /> : null}
       <div className={opacityClass}>
-        <div className="flex items-center justify-center h-screen bg-white">
+        <div className="flex items-center justify-center h-screen bg-white overflow-hidden">
           <div className={className}>
             {!isWalletInfoLoading && (
               <>

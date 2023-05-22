@@ -6,7 +6,7 @@ import { Fragment } from "react";
 
 export default function Home() {
   return (
-    <LayoutWrapper showBottomBar={true}>
+    <LayoutWrapper showBottomBar={true} title="Home">
       <WalletInfoSection />
       <ActionsSection />
       <CoinsListSection />

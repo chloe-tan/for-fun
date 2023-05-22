@@ -4,7 +4,7 @@ import LayoutWrapper from "@/components/layout/LayoutWrapper";
 
 export default function History() {
   return (
-    <LayoutWrapper showBottomBar={true}>
+    <LayoutWrapper showBottomBar={true} title="Txn History">
       <div className="flex flex-col gap-3">
         <FunTypography level={2}>Transactions</FunTypography>
         <FunUnsupported />
