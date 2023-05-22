@@ -1,8 +1,8 @@
 @import 'tailwindcss/tailwind.css';
 
 .fade-out {
-  opacity: 100;
-  @apply transition-opacity duration-5000 ease-in-out;
+  opacity: 1;
+  transition: opacity 5s ease-in-out;
 }
 
 .fade-out.fade-out-active {

@@ -4,6 +4,7 @@ import CircleWrapper from "../CircleWrapper";
 import FunTypography from "../FunTypography";
 import SwapDivider, { Line } from "./SwapDivider";
 import { formatCryptoAndStringify } from "@/utils/frontend/utils";
+import LoadingSplash from "../LoadingSplash";
 
 function LineItem({ ticker, amount }: { ticker: CoinTickerType; amount: number }) {
   return (

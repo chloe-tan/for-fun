@@ -14,6 +14,7 @@ export function WithStore({ children }: { children: ReactNode }) {
   const [coinPricesInfo, setCoinPricesInfo] = useState<any>(null);
   const [isCoinPricesInfoLoading, setIsCoinPricesInfoLoading] = useState<any>(true);
   const [isWalletInfoLoading, setIsWalletInfoLoading] = useState(true);
+  const [isOverlayLoading, setIsOverlayLoading] = useState<boolean>(false);
   const [reloadCounter, setReloadCounter] = useState(0);
   const refreshStore = () => setReloadCounter((prev) => prev + 1);
 
@@ -52,8 +53,21 @@ export function WithStore({ children }: { children: ReactNode }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const states = {
+    walletInfo, 
+    isWalletInfoLoading, 
+    coinPricesInfo, 
+    isCoinPricesInfoLoading,
+    isOverlayLoading,
+  }
+
+  const reducers = {
+    refreshStore,
+    setIsOverlayLoading,
+  }
+
   return (
-    <StoreContext.Provider value={[{ walletInfo, isWalletInfoLoading, coinPricesInfo, isCoinPricesInfoLoading }, { refreshStore }]}>
+    <StoreContext.Provider value={[states, reducers]}>
       {children}
     </StoreContext.Provider>
   );

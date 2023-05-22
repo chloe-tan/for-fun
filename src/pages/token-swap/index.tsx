@@ -16,7 +16,7 @@ enum SwapStep {
 export default function Swap() {
   const router = useRouter();
   const [, { showToastMessage }] = useToast();
-  const [{ coinPricesInfo, isCoinPricesInfoLoading }] = useStore();
+  const [{ coinPricesInfo, isCoinPricesInfoLoading }, { setIsOverlayLoading }] = useStore();
   const [step, setStep] = useState<SwapStep>(SwapStep.SELECTION);
   const [selectedFromTicker, setSelectedFromTicker] = useState<CoinTickerType>(CoinTickerType.ETH);
   const [selectedToTicker, setSelectedToTicker] = useState<CoinTickerType | null>(null);
@@ -49,11 +49,14 @@ export default function Swap() {
 
   const onClickConfirm = useCallback(() => {  
     // TODO: Fire async txn function
-
-    // Dont wait, just redirct to home page
-    router.push(HOME_ROUTE_BASE);
-    showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { router.push(HISTORY_ROUTE_BASE) } })
-  }, [router, showToastMessage])
+    setIsOverlayLoading(true);
+    
+    setTimeout(() => {
+      router.push(HOME_ROUTE_BASE);
+      showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { router.push(HISTORY_ROUTE_BASE) } })
+      setIsOverlayLoading(false);
+    }, 5000)
+  }, [router, setIsOverlayLoading, showToastMessage])
 
   return (
     <LayoutWrapper topBarProps={{ showBack: true }}>
