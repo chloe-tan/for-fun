@@ -1,7 +1,7 @@
 import CircleWrapper from "@/components/CircleWrapper";
 import FunTypography from "@/components/FunTypography";
 import { useStore } from "@/components/hooks/useStore";
-import { formatCurrencyAndStringify } from "@/utils/frontend/utils";
+import { formatCurrencyAndStringify } from "@/utils/utils";
 import { useMemo } from "react";
 
 export default function WalletInfoSection() {

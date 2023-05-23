@@ -1,7 +1,7 @@
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { getEthBalance, getTokenBalance } from "./ethersService";
 import { WalletInfo } from "@/const/wallet";
-import { getCoinPricesInUSD } from "../common/coingeckoService";
+import { getCoinPricesInUSD } from "./coingeckoService";
 const { FunWallet, configureEnvironment } = require("fun-wallet")
 const { Eoa } = require("fun-wallet/auth")
 
@@ -26,31 +26,31 @@ async function initFunWallet() {
   console.debug("unique_id", uniqueId);
   funWallet = await new FunWallet({ uniqueId })
   console.debug("fun_wallet_init", funWallet);
-  // return funWallet.getAddress();
+  return funWallet.getAddress();
 }
+
 
 async function transferTokens() {
   // TODO:
 }
 
-async function swapTokens({ inToken, outToken, amount }: any) {
-
-  if (!inToken || !outToken || !amount) {
-    throw Error(`Missing fields ${inToken}, ${outToken}, ${amount}}`);
-  }
-
-  if (funWallet == null || auth == null || uniqueId == null) {
-    await initFunWallet();
-  }
-
+export async function swapTokens() {
+  await configureEnvironment({
+    chain: 5,
+    apiKey: API_KEY,
+    gasSponsor: false
+  })
+  const auth = await new Eoa({ privateKey: PRIVATE_KEY })
+  const uniqueId = await auth.getUniqueId()
+  const funWallet = await new FunWallet({ uniqueId })
+  console.log("fun_wallet", funWallet);
   const receipt = await funWallet.swap(auth, {
     in: "eth",
-    amount: .001,
+    amount: .0001,
     out: "dai",
   });
-  console.log("swap_result", receipt);
+  return receipt;
 }
-
 // export async function getAddress() {
 //   try {
 //     if (funWallet == null || auth == null || uniqueId == null) {
@@ -69,13 +69,14 @@ async function swapTokens({ inToken, outToken, amount }: any) {
 export async function getWalletInfo(): Promise<WalletInfo> {
   try {
     // const addr = await FunWallet.getAddress(FUN_ADDRESS, 2, CHAIN_ID, API_KEY)
-    // const addr = "0x4C8DB9bb25063a729d819BaCDD0c3EB36003E212";
-    const addr = "0x150aD6F41c2D56c2f6a6bA73560105aA73b5001b";
+    // const addr = "0x150aD6F41c2D56c2f6a6bA73560105aA73b5001b";
+    // const addr = FUN_ADDRESS;
+    const addr = "0x4C8DB9bb25063a729d819BaCDD0c3EB36003E212"
     const coinPrices = await getCoinPricesInUSD();
     const [ethData, usdcData, daiData] = await Promise.all([
-      getEthBalance(addr, coinPrices?.[CoinTickerDetailMap[CoinTickerType.ETH].cgKey]?.usd),
-      getTokenBalance(addr, CoinTickerType.USDC, coinPrices?.[CoinTickerDetailMap[CoinTickerType.USDC].cgKey].usd),
-      getTokenBalance(addr, CoinTickerType.DAI, coinPrices?.[CoinTickerDetailMap[CoinTickerType.DAI].cgKey].usd),
+      getEthBalance(addr, coinPrices?.[CoinTickerDetailMap?.[CoinTickerType.ETH].cgKey]?.usd || 0),
+      getTokenBalance(addr, CoinTickerType.USDC, coinPrices?.[CoinTickerDetailMap[CoinTickerType.USDC].cgKey]?.usd || 0),
+      getTokenBalance(addr, CoinTickerType.DAI, coinPrices?.[CoinTickerDetailMap[CoinTickerType.DAI].cgKey]?.usd || 0),
     ])
 
     const returnInfo = {

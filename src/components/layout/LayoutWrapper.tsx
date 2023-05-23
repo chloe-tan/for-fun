@@ -28,7 +28,7 @@ export default function LayoutWrapper({ children, showBottomBar = false, topBarP
   return (
     <Fragment>
       <Head>
-        <title>Fun{title ? ` | ${title}` : ""}</title>
+        {/* <title>Fun{title ? ` | ${title}` : ""}</title> */}
         <meta property="og:type" content="website" />
         {/* TODO: OgImage metas goe here */}
       </Head>

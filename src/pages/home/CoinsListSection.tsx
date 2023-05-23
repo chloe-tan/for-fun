@@ -2,7 +2,7 @@ import CircleWrapper from "@/components/CircleWrapper";
 import FunTypography from "@/components/FunTypography";
 import { useStore } from "@/components/hooks/useStore";
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
-import { formatCryptoAndStringify, formatCurrencyAndStringify, formatNumberAndStringify } from "@/utils/frontend/utils";
+import { formatCryptoAndStringify, formatCurrencyAndStringify, formatNumberAndStringify } from "@/utils/utils";
 import { useMemo } from "react";
 
 function DeltaTag({ deltaValue = 0 }) {

@@ -1,4 +1,4 @@
-import { truncateAndShortenStr } from "@/utils/frontend/utils";
+import { truncateAndShortenStr } from "@/utils/utils";
 import FunTypography from "../FunTypography";
 import CircleWrapper from "../CircleWrapper";
 import { LeftArrowIcon, SettingsIcon } from "../Icons";

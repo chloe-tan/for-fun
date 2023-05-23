@@ -1,6 +1,6 @@
 import { WalletInfo } from "@/const/wallet";
-import { getCoinPricesInUSD } from "@/utils/common/coingeckoService";
-import { getWalletInfo } from "@/utils/frontend/fetchFromApiService";
+import { getCoinPricesInUSD } from "@/utils/coingeckoService";
+import { getWalletInfo } from "@/utils/fetchFromApiService";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 const StoreContext = createContext<any>([{}, () => { }, () => { }]);

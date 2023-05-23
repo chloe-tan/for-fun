@@ -4,7 +4,7 @@ import FunButton from "../FunButton";
 import SwapDivider from "./SwapDivider";
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { useStore } from "../hooks/useStore";
-import { formatCryptoAndStringify, formatNumberAndStringify } from "@/utils/frontend/utils";
+import { formatCryptoAndStringify, formatNumberAndStringify } from "@/utils/utils";
 import FunSelect from "../FunSelect";
 import FunInput from "../FunInput";
 import { InfoIconFilled } from "../Icons";
