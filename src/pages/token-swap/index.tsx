@@ -51,19 +51,18 @@ export default function Swap({ swapEnvs }: any) {
   const onClickConfirm = useCallback(async () => {
     setIsOverlayLoading(true);
 
-    const data = await swapTokens({ ...swapEnvs })
+    const swapResp = await swapTokens({ ...swapEnvs })
     
-    if (data.error) { // TODO:
+    if (!swapResp.success) { // TODO:
       alert('oh no')
     } 
 
-    if (data.mustFund) { // TODO:
-      alert('must fund')
-    }
-    
-    if (data.success) {
+    if (swapResp.success) {
+      const receipt = swapResp.receipt;
+      const txHash = receipt.txid;
+      const opHash = receipt.ophash;
       router.push(HOME_ROUTE_BASE);
-      showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { window.open(data.explorerUrl, "_blank") } })
+      showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { window.open(`https://goerli.etherscan.io/tx/${txHash}`, "_blank") } });
     }
    
     setIsOverlayLoading(false);
