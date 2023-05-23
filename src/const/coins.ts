@@ -12,7 +12,7 @@ export const CoinTickerDetailMap = {
     label: "ETH",
     bgClass: "bg-[#6281E3]",
     icon: EthIcon,
-    tokenAddress: "",
+    tokenAddress: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
     cgKey: "ethereum",
     decimals: 18,
   },

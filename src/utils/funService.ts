@@ -71,7 +71,7 @@ export async function getWalletInfo(): Promise<WalletInfo> {
     // const addr = await FunWallet.getAddress(FUN_ADDRESS, 2, CHAIN_ID, API_KEY)
     // const addr = "0x150aD6F41c2D56c2f6a6bA73560105aA73b5001b";
     // const addr = FUN_ADDRESS;
-    const addr = "0x4C8DB9bb25063a729d819BaCDD0c3EB36003E212"
+    const addr = FUN_ADDRESS || "";
     const coinPrices = await getCoinPricesInUSD();
     const [ethData, usdcData, daiData] = await Promise.all([
       getEthBalance(addr, coinPrices?.[CoinTickerDetailMap?.[CoinTickerType.ETH].cgKey]?.usd || 0),
