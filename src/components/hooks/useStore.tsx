@@ -28,30 +28,33 @@ export function WithStore({ children }: { children: ReactNode }) {
     }, 2000);
   }
 
+  async function fetchWallet(isSilent = false) {
+    !isSilent && setIsWalletInfoLoading(true);
+    const walletInfo: WalletInfo = await getWalletInfo();
+    if (walletInfo) {
+      setWalletInfo(walletInfo);
+    } else {
+      setWalletInfo(null);
+    }
+    setIsWalletInfoLoading(false);
+  }
+
   // Run once on component mount
   // We assume user is already logged in
   useEffect(() => {
-    async function fetchWallet() {
-      setIsWalletInfoLoading(true);
-      const walletInfo: WalletInfo = await getWalletInfo();
-      if (walletInfo) {
-        setWalletInfo(walletInfo);
-      } else {
-        setWalletInfo(null);
-      }
-      setIsWalletInfoLoading(false);
-    }
-    
     // Fire every 15 seconds to get up to date price info
     const interval = setInterval(getCoinPricesInfo, 10000);
-    
-    !walletInfo && fetchWallet().catch(console.error);
+    !walletInfo && fetchWallet(false).catch(console.error);
 
     return () => {
       clearInterval(interval);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    fetchWallet(true);
+  }, [reloadCounter])
 
   const states = {
     walletInfo, 

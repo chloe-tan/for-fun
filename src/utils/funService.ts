@@ -40,9 +40,9 @@ export async function estimateSwapGas({
   addressPk, 
   walletIndex, 
   swapConfig = {
-    inTokenAddress: "0xaa8958047307da7bb00f0766957edec0435b46b5",
-    outTokenAddress: "0x855af47cdf980a650ade1ad47c78ec1deebe9093",
-    amount: 0.0001, 
+    in: "0xaa8958047307da7bb00f0766957edec0435b46b5",
+    out: "0x855af47cdf980a650ade1ad47c78ec1deebe9093",
+    amount: 0.001, 
   } 
 }: any) {
   try {
@@ -75,8 +75,8 @@ export async function swapTokens({
   addressPk, 
   walletIndex, 
   swapConfig = {
-    inTokenAddress: "0xaa8958047307da7bb00f0766957edec0435b46b5",
-    outTokenAddress: "0x855af47cdf980a650ade1ad47c78ec1deebe9093",
+    in: "0xaa8958047307da7bb00f0766957edec0435b46b5",
+    out: "0x855af47cdf980a650ade1ad47c78ec1deebe9093",
     amount: 0.0001, 
   } 
 }: any) {

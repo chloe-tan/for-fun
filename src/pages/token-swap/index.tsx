@@ -17,6 +17,7 @@ enum SwapStep {
 export default function Swap({ swapEnvs }: any) {
   const router = useRouter();
   const [, { showToastMessage }] = useToast();
+  const [, { refreshStore }] = useStore();
   const [{ coinPricesInfo, isCoinPricesInfoLoading }, { setIsOverlayLoading }] = useStore();
   const [step, setStep] = useState<SwapStep>(SwapStep.SELECTION);
   const [selectedFromTicker, setSelectedFromTicker] = useState<CoinTickerType>(CoinTickerType.ETH);
@@ -62,11 +63,12 @@ export default function Swap({ swapEnvs }: any) {
       const txHash = receipt.txid;
       const opHash = receipt.ophash;
       router.push(HOME_ROUTE_BASE);
+      refreshStore?.(); // fetch latest wallet info
       showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { window.open(`https://goerli.etherscan.io/tx/${txHash}`, "_blank") } });
     }
    
     setIsOverlayLoading(false);
-  }, [router, setIsOverlayLoading, showToastMessage, swapEnvs])
+  }, [refreshStore, router, setIsOverlayLoading, showToastMessage, swapEnvs])
 
   return (
     <LayoutWrapper topBarProps={{ showBack: true }} title="Swap">
