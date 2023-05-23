@@ -3,11 +3,14 @@ import { getEthBalance, getTokenBalance } from "./ethersService";
 import { WalletInfo } from "@/const/wallet";
 import { getCoinPricesInUSD } from "./coingeckoService";
 const { FunWallet, configureEnvironment } = require("fun-wallet")
-const { Eoa } = require("fun-wallet/auth")
+const { Eoa } = require("fun-wallet/auth");
+const { fundWallet } = require("fun-wallet/utils");
 
-const FUN_ADDRESS = process.env.FUN_ADDRESS;
-const PRIVATE_KEY = process.env.FUN_PRIVATE_KEY;
-const API_KEY = process.env.FUN_API_KEY;
+const FUN_ADDRESS = process.env.FUN_ADDRESS
+const PRIVATE_KEY = process.env.FUN_PRIVATE_KEY
+const API_KEY = process.env.FUN_API_KEY
+const GAS_SPONSOR_ADDRESS = process.env.SPONSOR_ADDRESS
+
 // FIXME: Are there typescript types from fun lib?
 let funWallet: any = null;
 let auth: any = null;
@@ -29,42 +32,28 @@ async function initFunWallet() {
   return funWallet.getAddress();
 }
 
-
-async function transferTokens() {
-  // TODO:
-}
-
-export async function swapTokens() {
+export async function swapTokens({ funApiKey, sponsorAddress, addressPk }: any) {
   await configureEnvironment({
     chain: 5,
-    apiKey: API_KEY,
-    gasSponsor: false
+    apiKey: funApiKey,
+    gasSponsor: {
+      sponsorAddress: sponsorAddress,
+    }
   })
-  const auth = await new Eoa({ privateKey: PRIVATE_KEY })
+  const auth = new Eoa({ privateKey: addressPk })
+  console.log("auth", auth)
   const uniqueId = await auth.getUniqueId()
-  const funWallet = await new FunWallet({ uniqueId })
-  console.log("fun_wallet", funWallet);
-  const receipt = await funWallet.swap(auth, {
+  console.log("unique_id", uniqueId)
+  const wallet = new FunWallet({ uniqueId })
+  console.log("wallet", wallet)
+  // await fundWallet(auth, wallet, 0.01) // if gasless
+  const receipt = await wallet.swap(auth, {
     in: "eth",
-    amount: .0001,
+    amount: 0.000001,
     out: "dai",
   });
   return receipt;
 }
-// export async function getAddress() {
-//   try {
-//     if (funWallet == null || auth == null || uniqueId == null) {
-//       await initFunWallet();
-//     }
-//     console.debug("fun_wallet", funWallet)
-//     const addr = await funWallet.getAddress();
-//     console.debug("address", addr)
-//     return addr;
-//   } catch (e) {
-//     console.error("error_getAddress");
-//     return "0x..";
-//   }
-// }
 
 export async function getWalletInfo(): Promise<WalletInfo> {
   try {

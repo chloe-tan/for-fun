@@ -5,6 +5,7 @@ import SwapConfirmationStep from "@/components/swap/SwapConfirmationStep";
 import SwapSelectionStep from "@/components/swap/SwapSelectionStep";
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { HISTORY_ROUTE_BASE, HOME_ROUTE_BASE, TOKEN_SWAP_ROUTE_BASE } from "@/const/routes";
+import { swapTokens } from "@/utils/funService";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -13,7 +14,7 @@ enum SwapStep {
   CONFIRMATION
 }
 
-export default function Swap() {
+export default function Swap({ swapEnvs }: any) {
   const router = useRouter();
   const [, { showToastMessage }] = useToast();
   const [{ coinPricesInfo, isCoinPricesInfoLoading }, { setIsOverlayLoading }] = useStore();
@@ -47,17 +48,26 @@ export default function Swap() {
     setStep(SwapStep.CONFIRMATION);
   }, [toTickerAmount]);
 
-  const onClickConfirm = useCallback(() => {  
-    // TODO: Fire async txn function
+  const onClickConfirm = useCallback(async () => {
     setIsOverlayLoading(true);
+
+    const data = await swapTokens({ ...swapEnvs })
     
-    const txHash = "0x5ae8529721f61082f87e9812cd6149b8c84fc59ad694dbc5751b7c74cb6b609a"
-    setTimeout(() => {
+    if (data.error) { // TODO:
+      alert('oh no')
+    } 
+
+    if (data.mustFund) { // TODO:
+      alert('must fund')
+    }
+    
+    if (data.success) {
       router.push(HOME_ROUTE_BASE);
-      showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { window.open(`https://goerli.etherscan.io/tx/${txHash}`, "_blank") } })
-      setIsOverlayLoading(false);
-    }, 5000)
-  }, [router, setIsOverlayLoading, showToastMessage])
+      showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { window.open(data.explorerUrl, "_blank") } })
+    }
+   
+    setIsOverlayLoading(false);
+  }, [router, setIsOverlayLoading, showToastMessage, swapEnvs])
 
   return (
     <LayoutWrapper topBarProps={{ showBack: true }} title="Swap">
@@ -85,4 +95,16 @@ export default function Swap() {
       )}
     </LayoutWrapper>
   )
+}
+
+export async function getStaticProps() {
+  return {
+    props: {
+      swapEnvs: {
+        addressPk: process.env.FUN_PRIVATE_KEY,
+        funApiKey: process.env.FUN_API_KEY,
+        sponsorAddress: process.env.SPONSOR_ADDRESS,
+      }
+    },
+  };
 }
