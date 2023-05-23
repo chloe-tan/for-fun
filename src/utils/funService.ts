@@ -35,7 +35,7 @@ async function initFunWallet() {
   return funWallet.getAddress();
 }
 
-export async function swapTokens({ funApiKey, sponsorAddress, addressPk }: any) {
+export async function swapTokens({ funApiKey, sponsorAddress, addressPk, walletIndex }: any) {
   await configureEnvironment({
     chain: 5,
     apiKey: funApiKey,
@@ -45,7 +45,7 @@ export async function swapTokens({ funApiKey, sponsorAddress, addressPk }: any) 
   })
   const auth = new Eoa({ privateKey: addressPk })
   const uniqueId = await auth.getUniqueId()
-  const wallet = new FunWallet({ uniqueId, index: WALLET_INDEX })
+  const wallet = new FunWallet({ uniqueId, index: Number(walletIndex) })
   console.log(">wallet", wallet)
   console.log(">wallet_address", await wallet.getAddress());
   // const gas = await wallet.estimateGas(auth, {
@@ -54,11 +54,15 @@ export async function swapTokens({ funApiKey, sponsorAddress, addressPk }: any) 
   //   out: "dai",
   // });
 
+  // const funder_auth = new Eoa({ privateKey: "0xf3240969c0e94963177e33dcbcbf2a03acc4782d22f3587b63a56b9e37ba2fa0" })
+  // console.log("funder_auth", funder_auth);
   // const paymasterAddress = await gasSponsor.getPaymasterAddress()
-  // await fundWallet(auth, wallet, 0.01) // if gasless
-  const receipt = await wallet?.swap?.(auth, {
+  // const fund_resp = await fundWallet(funder_auth, wallet, 0.005) // if gasless
+  // console.log("fund_wallet_done", fund_resp);
+
+  const receipt = await wallet.swap(auth, {
     in: "eth",
-    amount: 0.000001,
+    amount: 0.001,
     out: "dai",
   });
   return receipt;
@@ -102,5 +106,24 @@ export async function getWalletInfo(): Promise<WalletInfo> {
   } catch (err) {
     console.log(err);
     return null;
+  }
+}
+
+
+// TODO: Move to another service file
+const FAUCETURL = "https://kjj7i5hi79.execute-api.us-west-2.amazonaws.com/prod/demo-faucet/"
+export const handleFundWallet = async function (addr: any = process.env.FUN_ADDRESS) {
+  try {
+    await fetch(`${FAUCETURL}get-faucet?token=eth&testnet=goerli&addr=${addr}`)
+    await fetch(`${FAUCETURL}get-faucet?token=usdc&testnet=goerli&addr=${addr}`)
+    await fetch(`${FAUCETURL}get-faucet?token=dai&testnet=goerli&addr=${addr}`)
+    await fetch(`${FAUCETURL}get-faucet?token=usdt&testnet=goerli&addr=${addr}`)
+    await fetch(`${FAUCETURL}stake-token?testnet=goerli&addr=${addr}`)
+
+    setTimeout(() => {
+      return;
+    }, 1500)
+  } catch (e: any) {
+    return e.toString();
   }
 }

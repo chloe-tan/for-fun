@@ -43,7 +43,7 @@ export function WithStore({ children }: { children: ReactNode }) {
     }
     
     // Fire every 15 seconds to get up to date price info
-    const interval = setInterval(getCoinPricesInfo, 30000);
+    const interval = setInterval(getCoinPricesInfo, 10000);
     
     !walletInfo && fetchWallet().catch(console.error);
 
