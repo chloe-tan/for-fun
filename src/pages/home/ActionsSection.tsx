@@ -1,7 +1,6 @@
 import FunButton from "@/components/FunButton";
 import { SendIcon, SwapIcon } from "@/components/Icons";
 import { SEND_ROUTE_BASE, SWAP_ROUTE_BASE } from "@/const/routes";
-import { swapTokens } from "@/utils/funService";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 

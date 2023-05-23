@@ -1,3 +1,4 @@
+import { estimateGas } from '@/utils/ethersService';
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { getEthBalance, getTokenBalance } from "./ethersService";
 import { WalletInfo } from "@/const/wallet";
@@ -5,7 +6,9 @@ import { getCoinPricesInUSD } from "./coingeckoService";
 const { FunWallet, configureEnvironment } = require("fun-wallet")
 const { Eoa } = require("fun-wallet/auth");
 const { fundWallet } = require("fun-wallet/utils");
+const { GaslessSponsor } = require("fun-wallet/sponsors/GaslessSponsor")
 
+const WALLET_INDEX = process.env.WALLET_INDEX
 const FUN_ADDRESS = process.env.FUN_ADDRESS
 const PRIVATE_KEY = process.env.FUN_PRIVATE_KEY
 const API_KEY = process.env.FUN_API_KEY
@@ -27,7 +30,7 @@ async function initFunWallet() {
   console.debug("auth_init", auth);
   uniqueId = await auth.getUniqueId()
   console.debug("unique_id", uniqueId);
-  funWallet = await new FunWallet({ uniqueId })
+  funWallet = await new FunWallet({ uniqueId, index: WALLET_INDEX })
   console.debug("fun_wallet_init", funWallet);
   return funWallet.getAddress();
 }
@@ -36,18 +39,24 @@ export async function swapTokens({ funApiKey, sponsorAddress, addressPk }: any) 
   await configureEnvironment({
     chain: 5,
     apiKey: funApiKey,
-    gasSponsor: {
-      sponsorAddress: sponsorAddress,
-    }
+    // gasSponsor: {
+    //   sponsorAddress: sponsorAddress,
+    // }
   })
   const auth = new Eoa({ privateKey: addressPk })
-  console.log("auth", auth)
   const uniqueId = await auth.getUniqueId()
-  console.log("unique_id", uniqueId)
-  const wallet = new FunWallet({ uniqueId })
-  console.log("wallet", wallet)
+  const wallet = new FunWallet({ uniqueId, index: WALLET_INDEX })
+  console.log(">wallet", wallet)
+  console.log(">wallet_address", await wallet.getAddress());
+  // const gas = await wallet.estimateGas(auth, {
+  //   in: "eth",
+  //   amount: 0.000001,
+  //   out: "dai",
+  // });
+
+  // const paymasterAddress = await gasSponsor.getPaymasterAddress()
   // await fundWallet(auth, wallet, 0.01) // if gasless
-  const receipt = await wallet.swap(auth, {
+  const receipt = await wallet?.swap?.(auth, {
     in: "eth",
     amount: 0.000001,
     out: "dai",
@@ -60,6 +69,7 @@ export async function getWalletInfo(): Promise<WalletInfo> {
     // const addr = await FunWallet.getAddress(FUN_ADDRESS, 2, CHAIN_ID, API_KEY)
     // const addr = "0x150aD6F41c2D56c2f6a6bA73560105aA73b5001b";
     // const addr = FUN_ADDRESS;
+
     const addr = FUN_ADDRESS || "";
     const coinPrices = await getCoinPricesInUSD();
     const [ethData, usdcData, daiData] = await Promise.all([

@@ -14,6 +14,7 @@ module.exports = {
       fbase: ['16px', '24px'],
       fmd: ['20px', '28px'],
       flg: ['32px', '40px'],
+      fxl: ['42px', '50px']
     },
     textColor: {
       fwhite: "#FFFFFF",

@@ -15,7 +15,7 @@ export default function WalletInfoSection() {
   return (
     <div id="wallet-info-section" className="flex flex-col items-center jusitfy-center gap-3">
       <div>
-        <CircleWrapper text="🚀" size="h-20 w-20" textLevel={1} textStyles="text-[41px]" />
+        <CircleWrapper text="🚀" size="h-20 w-20" textLevel={1} textStyles="text-fxl" />
       </div>
       <div className="flex flex-col items-center gap-1">
         <FunTypography level={3} textColor="text-fgray">Wallet Balance</FunTypography>
