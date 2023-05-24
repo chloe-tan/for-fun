@@ -29,7 +29,11 @@ function FromContainer({ selectedFromTicker, setSelectedFromTicker, fromTickerAm
         </div>
       </div>
       <div id="amount-input" className="flex flex-1 flex-row items-center justify-end w-full">
-        <FunInput inputValue={fromTickerAmount} setInputValue={setFromTickerAmount} />
+        <FunInput 
+          inputValue={fromTickerAmount > 0 ? fromTickerAmount : null} 
+          setInputValue={setFromTickerAmount}
+          autoFocus={true} 
+        />&nbsp;
         <FunTypography level={1} textColor="text-fgray">{selectedFromTicker}</FunTypography>
       </div>
     </div>

@@ -31,6 +31,7 @@ export default function LayoutWrapper({ children, showBottomBar = false, topBarP
       <Head>
         <title>{pageTitle}</title>
         <meta property="og:type" content="website" />
+        <meta name="description" content="The Wallet Development Platform"/>
         {/* TODO: OgImage metas go here */}
       </Head>
       {isOverlayLoading || isWalletInfoLoading ? <LoadingSplash /> : null}

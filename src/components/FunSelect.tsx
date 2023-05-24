@@ -1,7 +1,7 @@
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { CoinListItem } from "@/pages/home/CoinsListSection";
 import FunTypography from "./FunTypography";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import CircleWrapper from "./CircleWrapper";
 import { ChevronDownIcon } from "./Icons";
 

@@ -31,7 +31,14 @@ export default function TopBar({ showBack = false, onBack }: TopBarProps) {
       <div className="flex items-center gap-2 align-middle">
         <CircleWrapper />
         <FunTypography level={3}>Wallet</FunTypography>
-        <FunTypography level={4} fontWeight="font-[400]" textColor="text-fgray">{truncateAndShortenStr(walletInfo?.address, 5, 4)}</FunTypography>
+        <FunTypography 
+          level={4} 
+          fontWeight="font-[400]" 
+          textColor="text-fgray" 
+          tooltipText={walletInfo?.address}
+        >
+          {truncateAndShortenStr(walletInfo?.address, 5, 4)}
+        </FunTypography>
       </div>
     </div>
   )

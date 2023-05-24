@@ -34,14 +34,14 @@ export default function Swap({ swapEnvs }: any) {
 
   const toTickerAmount = useMemo(() => {
     // Only trigger update if values are valid, coin price is not loading
-    if (selectedFromTicker && selectedToTicker && !isCoinPricesInfoLoading) {
+    if (selectedFromTicker && selectedToTicker && coinPricesInfo) {
       const toPrice = coinPricesInfo?.[CoinTickerDetailMap?.[selectedToTicker]?.cgKey]?.usd;
       const fromPrice = coinPricesInfo?.[CoinTickerDetailMap?.[selectedFromTicker]?.cgKey]?.usd;
       const conversionValue = (fromPrice / toPrice);
       return fromTickerAmount * conversionValue;
     }
     return 0
-  }, [coinPricesInfo, fromTickerAmount, isCoinPricesInfoLoading, selectedFromTicker, selectedToTicker]);
+  }, [coinPricesInfo, fromTickerAmount, selectedFromTicker, selectedToTicker]);
 
   const onClickReview = useCallback(() => {
     // Fix the toTickerAmount
