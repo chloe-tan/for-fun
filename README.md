@@ -7,7 +7,8 @@
 - Check it out: https://for-fun-chloe.vercel.app 👀 
 
 **Implementation**
-![Actual Implementation Images](https://github.com/chloe-tan/for-fun/assets/95644202/304d104f-0a2a-48d3-9f1d-d33f7d9b7a5a)
+
+![Actual Implementation Images](https://github.com/chloe-tan/for-fun/assets/95644202/d241625c-ad78-4bc8-9db9-18784da5c38b)
 
 
 ## Resources & References
