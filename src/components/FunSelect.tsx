@@ -79,7 +79,7 @@ export default function FunCoinSelect({ selectedTicker, setSelectedTicker, diffK
         <div className="flex flex-row flex-no-wrap gap-2">
           <CircleWrapper
             bgColor={CoinTickerDetailMap?.[selectedTicker]?.bgClass || "bg-[#00000014]"}
-            text={CoinTickerDetailMap[selectedTicker]?.icon?.() || ""}
+            text={CoinTickerDetailMap[selectedTicker]?.iconSmall?.() || ""}
           />
           <FunTypography fontWeight="font-normal" textColor="text-fblack">{selectedTicker || "Choose Coin"}</FunTypography>
         </div>

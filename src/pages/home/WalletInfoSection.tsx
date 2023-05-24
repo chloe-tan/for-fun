@@ -13,7 +13,7 @@ export default function WalletInfoSection() {
     return Object.keys(walletInfo?.coinBalanceInfo).reduce((acc, cur) => acc + walletInfo?.coinBalanceInfo?.[cur]?.balanceUsd, 0);
   }, [walletInfo])
   return (
-    <div id="wallet-info-section" className="flex flex-col items-center jusitfy-center gap-3">
+    <div id="wallet-info-section" className="flex flex-col items-center jusitfy-center gap-3 pt-2">
       <div>
         <CircleWrapper text="🚀" size="h-20 w-20" textLevel={1} textStyles="text-fxl" />
       </div>
