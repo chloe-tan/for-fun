@@ -1,4 +1,4 @@
-import { APP_BG_STYLE, LAYOUT_WIDTH_PX, LAYOUT_HEIGHT_PX } from "@/const/layout";
+import { APP_BG_STYLE } from "@/const/layout";
 import { Fragment, ReactNode, useMemo } from "react"
 import BottomBarOverlay from "./BottomBarOverlay";
 import ToastComponent from "../ToastComponent";

@@ -2,7 +2,6 @@ import { AppProps } from 'next/app';
 import { Fragment } from 'react';
 import "../styles/global.css";
 import { WithStore } from '@/components/hooks/useStore';
-import ToastComponent from '@/components/ToastComponent';
 import { WithToast } from '@/components/hooks/useToast';
 
 /**

@@ -13,6 +13,5 @@ export default function FunAppEntryIndex() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
-  // TODO: Maybe showing a splash / loading screen would be nice.
   return (<></>);
 }

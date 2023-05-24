@@ -9,8 +9,6 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 const provider = new ethers.providers.EtherscanProvider("goerli", ETHERSCAN_API_KEY);
 const uniswapV2RouterAddress = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D';
 
-
-
 export async function getEthBalance(address: string, usdPrice: number) {
   const balance: BigNumber = await provider.getBalance(address);
   console.log("balance_", balance);
