@@ -44,7 +44,8 @@ const pricePerGasInGwei = 40; // https://ethereumprice.org/gas/
 const priceOfGweiInEth = 10e-9;
 const gasFeeEstimateInEth = avgUniswapGasInGwei * pricePerGasInGwei * priceOfGweiInEth;
 
-function SwapCostBreakdown({ selectedFromTicker, fromTickerAmount }: { selectedFromTicker: CoinTickerType, fromTickerAmount: number }) {
+// Currently only support gas payment in eth
+function SwapCostBreakdown() {
   const [{ coinPricesInfo }] = useStore();
   const gasFeeEstimateInUsd = useMemo(() => {
     const priceOfEthInUsd = coinPricesInfo?.[CoinTickerDetailMap?.[CoinTickerType.ETH]?.cgKey]?.usd;
@@ -85,7 +86,7 @@ export default function SwapConfirmationStep(props: SwapConfirmationStepProps) {
   return (
     <div className="flex flex-col h-full mb-4">
       <SwapOverview {...props} />
-      <SwapCostBreakdown fromTickerAmount={props.fromTickerAmount} selectedFromTicker={props.fromTickerAmount} />
+      <SwapCostBreakdown />
       <FunButton type="primary" text="Confirm & Swap" onClick={props.onClickConfirm} />
     </div>
   )

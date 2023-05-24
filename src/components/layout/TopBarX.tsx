@@ -37,7 +37,7 @@ export default function TopBar({ showBack = false, onBack }: TopBarProps) {
           textColor="text-fgray" 
           tooltipText={walletInfo?.address}
         >
-          {truncateAndShortenStr(walletInfo?.address, 5, 4)}
+          <code>{truncateAndShortenStr(walletInfo?.address, 5, 4)}</code>
         </FunTypography>
       </div>
     </div>
