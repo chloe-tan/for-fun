@@ -1,7 +1,8 @@
+import { TxnStatus } from "@/const/txn";
 import { WalletInfo } from "@/const/wallet";
 import { getCoinPricesInUSD } from "@/utils/coingeckoService";
 import { getWalletInfo } from "@/utils/fetchFromApiService";
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useRef, useState } from "react";
 
 const StoreContext = createContext<any>([{}, () => { }, () => { }]);
 
@@ -18,6 +19,10 @@ export function WithStore({ children }: { children: ReactNode }) {
   const [reloadCounter, setReloadCounter] = useState(0);
   const refreshStore = () => setReloadCounter((prev) => prev + 1);
 
+  // For tracking
+  const [trackedTxHash, setTrackedTxHash] = useState<string|null>(null);
+  const trackedTxHashStatus = useRef<TxnStatus>(TxnStatus.PENDING);
+
   async function getCoinPricesInfo() {
     setIsCoinPricesInfoLoading(true);
     const info = await getCoinPricesInUSD();
@@ -25,7 +30,7 @@ export function WithStore({ children }: { children: ReactNode }) {
     // To prevent flashing if it loads too fast lol
     setTimeout(() => {
       setIsCoinPricesInfoLoading(false);
-    }, 2000);
+    }, 1000);
   }
 
   async function fetchWallet(isSilent = false) {
@@ -56,17 +61,26 @@ export function WithStore({ children }: { children: ReactNode }) {
     fetchWallet(true);
   }, [reloadCounter])
 
+  function startTrackingTxHash(txnHash: string) {
+    // Do tracking
+    setTrackedTxHash(txnHash);
+    // TODO: Interval to ping etherscan api to check on status of txn
+  }
+
   const states = {
     walletInfo, 
     isWalletInfoLoading, 
     coinPricesInfo, 
     isCoinPricesInfoLoading,
     isOverlayLoading,
+    trackedTxHash,
+    trackedTxHashStatus,
   }
 
   const reducers = {
     refreshStore,
     setIsOverlayLoading,
+    startTrackingTxHash,
   }
 
   return (

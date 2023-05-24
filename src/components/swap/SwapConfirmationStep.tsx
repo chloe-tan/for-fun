@@ -2,9 +2,8 @@ import FunButton from "../FunButton";
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import CircleWrapper from "../CircleWrapper";
 import FunTypography from "../FunTypography";
-import SwapDivider, { Line } from "./SwapDivider";
+import SwapDivider from "./SwapDivider";
 import { formatCryptoAndStringify } from "@/utils/utils";
-import LoadingSplash from "../LoadingSplash";
 
 function LineItem({ ticker, amount }: { ticker: CoinTickerType; amount: number }) {
   return (

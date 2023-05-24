@@ -45,10 +45,8 @@ export default function FunCoinSelect({ selectedTicker, setSelectedTicker, diffK
 
   function clickListener(e: MouseEvent) {
     const clickedContainer = e.target;
-    console.log("clicked", clickedContainer);
     const selectContainer = document.getElementById(selectContainerId);
     const menuContainer = document.getElementById(menuContainerId);
-    console.log("menu_", menuContainer)
     // @ts-ignore
     if ((selectContainer && selectContainer?.contains?.(clickedContainer)) || (menuContainer && menuContainer?.contains?.(clickedContainer))) {
       handleOpenMenu();

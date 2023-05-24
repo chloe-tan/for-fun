@@ -1,5 +1,6 @@
 import { erc20Abi, routerABI } from "@/const/abi";
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
+import { TxnStatus } from "@/const/txn";
 import { BigNumber, ethers } from "ethers";
 
 const FUN_ADDRESS = process.env.FUN_ADDRESS;
@@ -61,5 +62,23 @@ export async function estimateGas() {
     return gasEstimate.toString();
   } catch (error) {
     console.error('Error estimating gas:', error);
+  }
+}
+
+async function checkTransactionStatus(txHash: string, etherscanApiKey: string) {
+  try {
+    const provider = new ethers.providers.EtherscanProvider("goerli", etherscanApiKey);
+    const receipt = await provider.getTransactionReceipt(txHash);
+
+    if (receipt.status === 1) {
+      return TxnStatus.SUCCESS;
+    } else if (receipt.status === 0) {
+      return TxnStatus.FAIL;
+    } else {
+      return TxnStatus.PENDING;
+    }
+  } catch (error) {
+    console.error('Error occurred while checking transaction status:', error);
+    return 'Error occurred';
   }
 }

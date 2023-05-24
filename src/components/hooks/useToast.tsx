@@ -1,4 +1,7 @@
 import React, { useState, useEffect, createContext, useContext, ReactNode } from 'react';
+import { useStore } from './useStore';
+import { TxnStatus } from '@/const/txn';
+import { useRouter } from 'next/router';
 
 // Maintain a global toast context
 const ToastContext = createContext<any>([{}, () => { }, () => { }]);
@@ -25,6 +28,8 @@ export type ToastMessageInfo = {
 
 // Context
 export function WithToast({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const [{ trackedTxHash, trackedTxHashStatus }] = useStore();
   const [toastMessageInfo, setToastMessageInfo] = useState<ToastMessageInfo>(defaultToastInfo);
   const [showToast, setShowToast] = useState(false);
 
@@ -45,6 +50,15 @@ export function WithToast({ children }: { children: ReactNode }) {
       };
     }
   }, [showToast]);
+
+  // Tracking tx
+  useEffect(() => {
+    const curStatus = trackedTxHashStatus.current;
+    if (curStatus === TxnStatus.SUCCESS || curStatus === TxnStatus.FAIL) {
+      showToastMessage?.({ message: `Transaction ${trackedTxHashStatus.current}`, suffixAction: () => router.push(`https://goerli.etherscan.io/tx/${trackedTxHash}`) })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trackedTxHash, trackedTxHashStatus.current])
 
   const states = {
     showToast,

@@ -25,12 +25,13 @@ export default function LayoutWrapper({ children, showBottomBar = false, topBarP
     return `relative w-[360px] h-[600px] ${APP_BG_STYLE} flex flex-col items-center border border-gray-300 shadow-xl rounded-lg`;
   }, []);
   const innerPaddingClass = showBottomBar ? `pb-[64px]` : "";
+  const pageTitle = `Fun${title ? ` | ${title}` : ""}`;
   return (
     <Fragment>
       <Head>
-        {/* <title>Fun{title ? ` | ${title}` : ""}</title> */}
+        <title>{pageTitle}</title>
         <meta property="og:type" content="website" />
-        {/* TODO: OgImage metas goe here */}
+        {/* TODO: OgImage metas go here */}
       </Head>
       {isOverlayLoading || isWalletInfoLoading ? <LoadingSplash /> : null}
       <div className={opacityClass}>

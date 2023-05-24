@@ -12,7 +12,7 @@ export default function ToastComponent() {
           {toastMessageInfo?.prefix ? toastMessageInfo?.prefix : <CheckIcon colorClass="text-fgreensuccess" sizeClass="h-4 w-4" />}
           <FunTypography level={4} fontWeight="font-normal" textColor="text-fwhite">{toastMessageInfo?.message}</FunTypography>
         </div>
-        <button type="button" className="" data-dismiss-target="#toast-default" aria-label="Close" onClick={toastMessageInfo?.suffixAction}>
+        <button type="button" className="hover:opacity-70" data-dismiss-target="#toast-default" aria-label="Close" onClick={toastMessageInfo?.suffixAction}>
           {toastMessageInfo?.suffix ? toastMessageInfo?.suffix : <FunTypography level={4} textColor="text-fwhite">View</FunTypography>}
         </button>
       </div>

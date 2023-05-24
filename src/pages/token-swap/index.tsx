@@ -17,7 +17,7 @@ enum SwapStep {
 export default function Swap({ swapEnvs }: any) {
   const router = useRouter();
   const [, { showToastMessage }] = useToast();
-  const [, { refreshStore }] = useStore();
+  const [, { refreshStore, startTrackingTxHash }] = useStore();
   const [{ coinPricesInfo, isCoinPricesInfoLoading }, { setIsOverlayLoading }] = useStore();
   const [step, setStep] = useState<SwapStep>(SwapStep.SELECTION);
   const [selectedFromTicker, setSelectedFromTicker] = useState<CoinTickerType>(CoinTickerType.ETH);
@@ -52,11 +52,18 @@ export default function Swap({ swapEnvs }: any) {
   const onClickConfirm = useCallback(async () => {
     setIsOverlayLoading(true);
 
-    const swapResp = await swapTokens({ ...swapEnvs })
-    
+    const swapResp = await swapTokens({
+      ...swapEnvs,
+      swapConfig: {
+        in: CoinTickerDetailMap[selectedFromTicker].tokenAddress,
+        out: CoinTickerDetailMap[selectedToTicker as CoinTickerType].tokenAddress,
+        amount: fromTickerAmount,
+      }
+    })
+
     if (!swapResp.success) { // TODO:
-      alert('oh no')
-    } 
+      alert('An error occured during the swap. Please try again.')
+    }
 
     if (swapResp.success) {
       const receipt = swapResp.receipt;
@@ -65,13 +72,23 @@ export default function Swap({ swapEnvs }: any) {
       router.push(HOME_ROUTE_BASE);
       refreshStore?.(); // fetch latest wallet info
       showToastMessage?.({ message: "Transaction Submitted", suffixAction: () => { window.open(`https://goerli.etherscan.io/tx/${txHash}`, "_blank") } });
+      void startTrackingTxHash?.(txHash);
     }
-   
+
     setIsOverlayLoading(false);
-  }, [refreshStore, router, setIsOverlayLoading, showToastMessage, swapEnvs])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fromTickerAmount, refreshStore, router, selectedFromTicker, selectedToTicker, setIsOverlayLoading, showToastMessage, swapEnvs])
+
+  const onTopbarBack = useCallback(() => {
+    if (step === SwapStep.SELECTION) {
+      router.push(HOME_ROUTE_BASE);
+    } else {
+      setStep(SwapStep.SELECTION);
+    }
+  }, [router, step])
 
   return (
-    <LayoutWrapper topBarProps={{ showBack: true }} title="Swap">
+    <LayoutWrapper topBarProps={{ showBack: true, onBack: onTopbarBack }} title="Swap">
       {step === SwapStep.SELECTION && (
         <SwapSelectionStep
           selectedFromTicker={selectedFromTicker}
