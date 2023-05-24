@@ -28,7 +28,7 @@ function FromContainer({ selectedFromTicker, setSelectedFromTicker, fromTickerAm
           </FunTypography>
         </div>
       </div>
-      <div id="amount-input" className="flex flex-1 flex-row items-center justify-end w-full">
+      <div id="amount-input" className="flex flex-row items-center justify-end flex-1 w-full">
         <FunInput 
           inputValue={fromTickerAmount > 0 ? fromTickerAmount : null} 
           setInputValue={setFromTickerAmount}
@@ -51,7 +51,7 @@ function ToContainer({ selectedToTicker, setSelectedToTicker, selectedFromTicker
       </div>
       {selectedToTicker ? (
         <div id="amount-input" className="flex flex-row items-center">
-          <FunTypography level={1} textColor="text-fblack">{formatNumberAndStringify(toTickerAmount) ?? "|"}&nbsp;</FunTypography>
+          <FunTypography level={1} textColor="text-fblack">{formatNumberAndStringify(toTickerAmount, { maxBeforeUseSuffix: 100000 }) ?? "|"}&nbsp;</FunTypography>
           <FunTypography level={1} textColor="text-fgray">{selectedToTicker}</FunTypography>
         </div>
       ): null}

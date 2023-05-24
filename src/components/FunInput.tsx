@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo } from "react";
 import FunTypography from "./FunTypography";
 
 interface FunInputProps {
-  inputValue: string;
+  inputValue: string | null;
   setInputValue: React.Dispatch<React.SetStateAction<number>>;
   autoFocus?: boolean;
 }
@@ -20,22 +20,22 @@ export default function FunInput({ inputValue, setInputValue, autoFocus = false 
   }, [autoFocus])
 
   return (
-    <Fragment>
+    <div>
       <FunTypography level={1}>
         <input
           id={INPUT_ID}
           type="number"
           className={className}
-          value={inputValue}
+          value={inputValue == null ? "" : inputValue}
           onChange={(e) => {
             const value = Number(e?.target?.value);
             setInputValue?.(value);
           }}
           min={0}
-          step={0.0001}
+          step={.00001}
           placeholder=""
         />
       </FunTypography>
-    </Fragment>
+    </div>
   )
 }

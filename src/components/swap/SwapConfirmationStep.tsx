@@ -3,7 +3,9 @@ import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import CircleWrapper from "../CircleWrapper";
 import FunTypography from "../FunTypography";
 import SwapDivider from "./SwapDivider";
-import { formatCryptoAndStringify } from "@/utils/utils";
+import { formatCryptoAndStringify, formatCurrencyAndStringify } from "@/utils/utils";
+import { useMemo } from "react";
+import { useStore } from "../hooks/useStore";
 
 function LineItem({ ticker, amount }: { ticker: CoinTickerType; amount: number }) {
   return (
@@ -36,24 +38,34 @@ function SwapOverview(props: SwapConfirmationStepProps) {
   )
 }
 
-function SwapCostBreakdown() {
-  const etherGasFee = 0.01
+// Using gas estimate consts on 24 may. TODO: Live queries.
+const avgUniswapGasInGwei = 129819 // Checking aginst uniswapv2: https://crypto.com/defi/dashboard/gas-fees
+const pricePerGasInGwei = 40; // https://ethereumprice.org/gas/
+const priceOfGweiInEth = 10e-9;
+const gasFeeEstimateInEth = avgUniswapGasInGwei * pricePerGasInGwei * priceOfGweiInEth;
+
+function SwapCostBreakdown({ selectedFromTicker, fromTickerAmount }: { selectedFromTicker: CoinTickerType, fromTickerAmount: number }) {
+  const [{ coinPricesInfo }] = useStore();
+  const gasFeeEstimateInUsd = useMemo(() => {
+    const priceOfEthInUsd = coinPricesInfo?.[CoinTickerDetailMap?.[CoinTickerType.ETH]?.cgKey]?.usd;
+    return gasFeeEstimateInEth * priceOfEthInUsd;
+  }, [coinPricesInfo])
   return (
     <div className="flex flex-col gap-4 pb-6">
       <FunTypography level={4} textColor="text-fblack">Cost</FunTypography>
       <div id="gas" className="flex flex-row justify-between items-align">
         <FunTypography level={4} textColor="text-fgray" fontWeight="font-normal">Gas Fee</FunTypography>
         <div className="flex flex-row">
-          <FunTypography level={4} textColor="text-fgray" fontWeight="font-normal">{formatCryptoAndStringify(Number(etherGasFee), CoinTickerType.ETH)} •&nbsp;</FunTypography>
-          <FunTypography level={4} textColor="text-fblack" fontWeight="font-normal">$20.00</FunTypography>
+          <FunTypography level={4} textColor="text-fgray" fontWeight="font-normal">{formatCryptoAndStringify(Number(gasFeeEstimateInEth), CoinTickerType.ETH)} •&nbsp;</FunTypography>
+          <FunTypography level={4} textColor="text-fblack" fontWeight="font-normal">{formatCurrencyAndStringify(gasFeeEstimateInUsd)}</FunTypography>
         </div>
       </div>
       <hr className="bg-[#00000014]" />
       <div id="total" className="flex flex-row justify-between items-align">
         <FunTypography level={4} textColor="text-fblack">Total</FunTypography>
         <div className="flex flex-row">
-          <FunTypography level={4} textColor="text-fgray">{formatCryptoAndStringify(Number(100), "SUI")} •&nbsp;</FunTypography>
-          <FunTypography level={4} textColor="text-fblack">$20.00</FunTypography>
+          <FunTypography level={4} textColor="text-fgray">{formatCryptoAndStringify(Number(gasFeeEstimateInEth), CoinTickerType.ETH)} •&nbsp;</FunTypography>
+          <FunTypography level={4} textColor="text-fblack">{formatCurrencyAndStringify(gasFeeEstimateInUsd)}</FunTypography>
         </div>
       </div>
     </div>
@@ -73,7 +85,7 @@ export default function SwapConfirmationStep(props: SwapConfirmationStepProps) {
   return (
     <div className="flex flex-col h-full mb-4">
       <SwapOverview {...props} />
-      <SwapCostBreakdown />
+      <SwapCostBreakdown fromTickerAmount={props.fromTickerAmount} selectedFromTicker={props.fromTickerAmount} />
       <FunButton type="primary" text="Confirm & Swap" onClick={props.onClickConfirm} />
     </div>
   )

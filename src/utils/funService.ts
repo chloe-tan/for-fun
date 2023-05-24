@@ -1,4 +1,3 @@
-import { estimateGas } from '@/utils/ethersService';
 import { CoinTickerDetailMap, CoinTickerType } from "@/const/coins";
 import { getEthBalance, getTokenBalance } from "./ethersService";
 import { WalletInfo } from "@/const/wallet";
@@ -15,39 +14,6 @@ const CHAIN_ID = 5;
 const DEFAULT_IN_TOKEN = CoinTickerDetailMap[CoinTickerType.ETH].tokenAddress;
 const DEFAULT_OUT_TOKEN = CoinTickerDetailMap[CoinTickerType.USDC].tokenAddress;
 const DEFAULT_SWAP_AMOUNT = 0.0001
-
-// Called by frontend
-export async function estimateSwapGas({ 
-  funApiKey = API_KEY, 
-  addressPk = PRIVATE_KEY, 
-  walletIndex = WALLET_INDEX, 
-  swapConfig = {
-    in: DEFAULT_IN_TOKEN,
-    out: DEFAULT_OUT_TOKEN,
-    amount: DEFAULT_SWAP_AMOUNT, 
-  } 
-}: any) {
-  try {
-    await configureEnvironment({
-      chain: CHAIN_ID,
-      apiKey: funApiKey,
-    })
-    const auth = new Eoa({ privateKey: addressPk })
-    const uniqueId = await auth.getUniqueId()
-    const wallet = new FunWallet({ uniqueId, index: Number(walletIndex) })
-    const gas = await wallet.estimateGas(auth, swapConfig);
-    return {
-      success: true,
-      gasEstimate: gas,
-    };
-  } catch (err: any) {
-    console.log("An error was encountered during swap gas estimate", err.message);
-    return {
-      success: false,
-      gasEstimate: null,
-    }
-  }
-}
 
 // Called by frontend
 export async function swapTokens({ 
