@@ -15,7 +15,7 @@ function LineItem({ ticker, amount }: { ticker: CoinTickerType; amount: number }
         <FunTypography level={3} textColor="text-fblack">{ticker}</FunTypography>
       </div>
       <div>
-        <FunTypography level={4} fontWeight="font-normal" textColor="text-fblack">{formatCryptoAndStringify(Number(amount), ticker)}</FunTypography>
+        <FunTypography level={4} fontWeight="font-normal" textColor="text-fblack">{formatCryptoAndStringify(amount, ticker, true, { softDecimalPrecision: 10 })}</FunTypography>
       </div>
     </div>
   )
@@ -26,7 +26,7 @@ function SwapOverview(props: SwapConfirmationStepProps) {
   return (
     <div className="pb-6">
       <div className="flex flex-col py-2 pb-8 items-center gap-3">
-        <CircleWrapper size="h-12 w-12" text={CoinTickerDetailMap[selectedFromTicker].icon?.()} bgColor={CoinTickerDetailMap[selectedFromTicker].bgClass}></CircleWrapper>
+        <CircleWrapper size="h-12 w-12" text={CoinTickerDetailMap[selectedFromTicker].icon?.()} bgColor={CoinTickerDetailMap[selectedFromTicker].bgClass} />
         <FunTypography level={2} textColor="font-fblack" overrideStyles="text-[24px] leading-[32px]">Swapping</FunTypography>
       </div>
       <div>

@@ -121,7 +121,6 @@ export async function getStaticProps() {
       swapEnvs: {
         addressPk: process.env.FUN_PRIVATE_KEY || "",
         funApiKey: process.env.FUN_API_KEY || "",
-        sponsorAddress: process.env.SPONSOR_ADDRESS || "",
         walletIndex: process.env.WALLET_INDEX || "",
       }
     },
