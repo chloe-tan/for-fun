@@ -1,32 +1,32 @@
-## Fun Wallet App
+# Fun Wallet App
 
-**Overview**
+## Overview
 
 - Demo wallet app utilizing FunSDK 
 - Perform simple token swaps between `eth` / `dai` / `usdc` tokens on the `goerli` ethereum testnet
-- Check it out: https://for-fun-chloe.vercelApp use-cases & walkthrough
-
-**Implementation**
-
+- **Check it out @ [https://for-fun-chloe.vercel.app](https://for-fun-chloe.vercel.app/)**
 ![Actual Implementation Images](https://github.com/chloe-tan/for-fun/assets/95644202/d241625c-ad78-4bc8-9db9-18784da5c38b)
 
-**App use-cases & walkthrough**
+## App use-cases
 
 - [x] User can view their wallet summary  
 - [x] User can view their individual token balances
 - [x] User can perform a token swap using their available balances
 - [x] User can choose to view the submitted transaction on a block explorer
 
+## Demos
+
+1. Wallet summary 
+
+https://github.com/chloe-tan/for-fun/assets/95644202/92332cbc-459b-4c1d-871d-81461fbd37b5
+
+3. Performing a token swap
+
 https://github.com/chloe-tan/for-fun/assets/95644202/3ae8bf12-3b3d-4f6d-b156-68a007caaef1
 
+4. Unsupported page notices
 
-## Resources & References
-1. Process Documentation by @chloe-tan
-3. [Fun Documentation](https://docs.fun.xyz/)
-4. [Fun Demo App Reference](https://demo.fun.xyz/)
-5. [Figma Design Reference](https://www.figma.com/file/xZDVdL7pkbgJPTtU6GH4mi/Untitled?type=design&node-id=0%3A43&t=o7xdSZpgj7AdHBmf-1)
-
-
+https://github.com/chloe-tan/for-fun/assets/95644202/efc7f689-94b4-43f7-9e19-99a0db7c6dc7
 
 
 ## Development setup
@@ -58,4 +58,10 @@ Navigate to [http://localhost:3000](http://localhost:3000) with your browser to 
 ## Vercel integration
 
 This app is also automatically deployed on vercel with every new commit to `main` (production) and/or PRs opened (preview).
+
+## Resources & References
+1. Process Documentation by @chloe-tan
+3. [Fun Documentation](https://docs.fun.xyz/)
+4. [Fun Demo App Reference](https://demo.fun.xyz/)
+5. [Figma Design Reference](https://www.figma.com/file/xZDVdL7pkbgJPTtU6GH4mi/Untitled?type=design&node-id=0%3A43&t=o7xdSZpgj7AdHBmf-1)
 
