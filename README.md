@@ -63,5 +63,4 @@ This app is also automatically deployed on vercel with every new commit to `main
 1. Process Documentation by @chloe-tan
 3. [Fun Documentation](https://docs.fun.xyz/)
 4. [Fun Demo App Reference](https://demo.fun.xyz/)
-5. [Figma Design Reference](https://www.figma.com/file/xZDVdL7pkbgJPTtU6GH4mi/Untitled?type=design&node-id=0%3A43&t=o7xdSZpgj7AdHBmf-1)
-
+5. Figma Design
